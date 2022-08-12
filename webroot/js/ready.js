@@ -29,7 +29,11 @@ jQuery(document).ready(function ($) {
         events: 'events/feed',
         eventRender: function (event, element) {
             element.qtip({
-                content: event.details,
+                content: '<b>' + event.title + '</b><hr/><b>[START] </b> ' 
+                    + new Date(event.start).toUTCString() + '<br/>'
+                    + ((event.end) ? '<b>[END] </b> ' + new Date(event.end).toUTCString().toString() : '') 
+                    + '<hr/><b> All Day Event? </b> ' + ((event.allDay) ? 'Yes' : 'No') 
+                    + '<br/><b>Status: </b> <i>' + event.status + '</i>',
                 position: { 
                     target: 'mouse',
                     adjust: {

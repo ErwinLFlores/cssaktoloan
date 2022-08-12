@@ -159,12 +159,12 @@ class EventsController extends AppController
     // The feed action is called from "webroot/js/ready.js" to get the list of events (JSON)
     public function feed($id=null)
     {
-        $this->loggerIt('Events', 'feed', $this->Auth->user('id'), $event, 'Events Feed Load (Calendar)');
         $this->viewBuilder()->layout('ajax');
         $vars = $this->request->query([]);
         $conditions = ['UNIX_TIMESTAMP(start) >=' => $vars['start'], 
             'UNIX_TIMESTAMP(start) <=' => $vars['end']];
         $events = $this->Events->find('all', $conditions)->contain(['EventTypes']);
+        $this->loggerIt('Events', 'feed', $this->Auth->user('id'), $events, 'Events Feed Load (Calendar)');
 
         foreach($events as $event) {
             if($event->all_day === 1) {
@@ -182,6 +182,7 @@ class EventsController extends AppController
                 'allDay' => $allday,
                 'url' => Router::url(['action' => 'view', $event->id]),
                 'details' => nl2br(h($event->details)),
+                'status' => $event->status,
                 'className' => $event->event_type->color
             ];
         }

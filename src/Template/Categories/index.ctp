@@ -52,7 +52,7 @@
                                     <?php endforeach; ?>
                                 <?php else: ?>
                                     <tr>
-                                        <td colspan="4">No Categories found.</td>
+                                        <td colspan="5">No Categories found.</td>
                                     </tr>
                                 <?php endif; ?>
                             </tbody>

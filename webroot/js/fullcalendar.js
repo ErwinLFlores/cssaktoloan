@@ -5476,7 +5476,7 @@ DayGrid.mixin({
 		if (seg.isStart) {
 			timeText = this.getEventTimeText(event);
 			if (timeText) {
-				timeHtml = '<span class="fc-time">' + htmlEscape(timeText) + '</span>';
+				timeHtml = '<span class="fc-time">' + htmlEscape(timeText.toUpperCase()) + '</span>';
 			}
 		}
 
