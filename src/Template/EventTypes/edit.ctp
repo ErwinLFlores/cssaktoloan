@@ -47,15 +47,8 @@
 								<div class="col-lg-9 col-md-9 col-sm-7 col-xs-5">
 									<div class="form-group">
 										<div class="form-line">
-											<select id="color" name="color" class="form-control select2" required>
-												<option value="" selected disabled>SELECT...</option>
-												<?php foreach ($event_type_colors->categories_items as $key => $status) { ?>
-													<option value="<?=h($status->merge_value);?>"
-														<?=h(($event_type->color == $status->merge_value) ? 'selected' : '');?>>
-														<?=h($status->name);?>
-													</option>
-												<?php } ?>
-											</select>
+											<input type="color" name="color" class="form-control" 
+												value="<?=h($event_type->color); ?>" maxlength="50" required>
 										</div>
 									</div>
 								</div>

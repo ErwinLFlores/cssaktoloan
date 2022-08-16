@@ -25,19 +25,7 @@
 	 		<legend><?= __('Add Event Type'); ?></legend>
 		<?php
 			echo $this->Form->input('name');
-			echo $this->Form->input('color', 
-						['options' => [
-							'Blue' => 'Blue',
-							'Red' => 'Red',
-							'Pink' => 'Pink',
-							'Purple' => 'Purple',
-							'Orange' => 'Orange',
-							'Green' => 'Green',
-							'Gray' => 'Gray',
-							'Black' => 'Black',
-							'Brown' => 'Brown'
-						]]);
-	
+			echo $this->Form->input('colors', array('type' => 'color'));
 		?>
 		</fieldset>
 	<?= $this->Form->button(__('Submit', true));?>

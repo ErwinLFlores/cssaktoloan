@@ -183,7 +183,7 @@ class EventsController extends AppController
                 'url' => Router::url(['action' => 'view', $event->id]),
                 'details' => nl2br(h($event->details)),
                 'status' => $event->status,
-                'className' => $event->event_type->color
+                'color' => $event->event_type->color
             ];
         }
 

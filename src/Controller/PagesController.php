@@ -28,16 +28,9 @@ use Cake\View\Exception\MissingTemplateException;
  */
 class PagesController extends AppController
 {
-    /**
-     * Displays a view
-     *
-     * @param array ...$path Path segments.
-     * @return \Cake\Http\Response|null
-     * @throws \Cake\Http\Exception\ForbiddenException When a directory traversal attempt.
-     * @throws \Cake\Http\Exception\NotFoundException When the view file could not
-     *   be found
-     * @throws \Cake\View\Exception\MissingTemplateException In debug mode.
-     */
+    protected $diskFree;
+    protected $diskTotal;
+
     public function display(...$path)
     {
         if (!$path) {
@@ -66,9 +59,38 @@ class PagesController extends AppController
         }
     }
 
+    private function disk_report()
+    {
+        $this->diskFree = disk_free_space ("/");
+        $this->diskTotal = disk_total_space ("/");
+
+        $diskFreePercentage = round(($this->diskFree/$this->diskTotal) * 100, 2);
+        $diskUsedPercentage = 100 - $diskFreePercentage;
+
+        return [
+            'free_disk_converted' => $this->bytesToHuman($this->diskFree),
+            'total_disk_converted' => $this->bytesToHuman($this->diskTotal),
+            'total_disk_used' => $this->bytesToHuman($this->diskTotal-$this->diskFree),
+            'total_free' => $diskFreePercentage . ' %',
+            'total_used' => $diskUsedPercentage . ' %'
+        ];
+    }
+ 
+    private function bytesToHuman($size)
+    {
+        $base = log($size, 1024);
+        $suffixes = array('', 'KB', 'MB', 'GB', 'TB', 'PB');
+
+        return round(pow(1024, $base - floor($base)), 2) 
+            . ' '. $suffixes[floor($base)];
+    }
+
     public function home() 
     {   
         $this->set('page_title', 'Dashboard');
+
+        $disk = $this->disk_report();
+        $this->set('disk', $disk);
 
         $this->loadModel('SapFamily');
         $this->loadModel('SapMembers');

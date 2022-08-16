@@ -42,7 +42,7 @@
 								<tr<?= $class;?>>
 									<td><?=h( ($eventType->status) ? 'Active' : 'Inactive'); ?></td>
 									<td><?=h($eventType->name); ?></td>
-									<td><?=h($eventType->color); ?></td>
+									<td style="background-color:<?=h($eventType->color);?>;"></td>
 									<td class="actions">
 										<?php 
 											if (
@@ -121,12 +121,8 @@
 						<div class="col-lg-9 col-md-9 col-sm-7 col-xs-5">
 							<div class="form-group">
 								<div class="form-line">
-									<select id="color" name="color" class="form-control select2" required>
-										<option value="" selected disabled>SELECT...</option>
-										<?php foreach ($event_type_colors->categories_items as $key => $status) { ?>
-											<option value="<?=h($status->merge_value);?>"><?=h($status->name);?></option>
-										<?php } ?>
-									</select>
+									<input type="color" name="color" class="form-control" 
+										value="#2AA5C0" maxlength="50" required>
 								</div>
 							</div>
 						</div>

@@ -50,7 +50,6 @@ class EventTypesController extends AppController
      */
     public function index()
     {
-        $this->set('event_type_colors', $this->Categories->findByMergeValue('event_type_colors'));
         $this->set('eventTypes', $this->paginate($this->EventTypes));
         $this->set('_serialize', ['eventTypes']);
     }
@@ -142,7 +141,6 @@ class EventTypesController extends AppController
             return $this->redirect($this->referer());
         }
 
-        $this->set('event_type_colors', $this->Categories->findByMergeValue('event_type_colors'));
         $this->set('account_status', $this->Categories->findByMergeValue('account_status'));
         $this->set(compact('event_type'));
         $this->set('_serialize', ['event_type']);
