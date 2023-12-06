@@ -9,7 +9,8 @@ use Cake\Validation\Validator;
 /**
  * Users Model
  *
- * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\BelongsTo $Roles
+ * @property \App\Model\Table\TotalContributionsTable&\Cake\ORM\Association\BelongsTo $TotalContributions
+ * @property \App\Model\Table\ContributionsTable&\Cake\ORM\Association\HasMany $Contributions
  *
  * @method \App\Model\Entity\User get($primaryKey, $options = [])
  * @method \App\Model\Entity\User newEntity($data = null, array $options = [])
@@ -40,9 +41,12 @@ class UsersTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Roles', [
-            'foreignKey' => 'role_id',
+        $this->belongsTo('TotalContributions', [
+            'foreignKey' => 'total_contribution_id',
             'joinType' => 'INNER',
+        ]);
+        $this->hasMany('Contributions', [
+            'foreignKey' => 'user_id',
         ]);
     }
 
@@ -59,15 +63,44 @@ class UsersTable extends Table
             ->allowEmptyString('id', null, 'create');
 
         $validator
-            ->integer('status')
-            ->requirePresence('status', 'create')
+            ->scalar('status')
+            ->maxLength('status', 255)
             ->notEmptyString('status');
 
         $validator
-            ->scalar('username')
-            ->maxLength('username', 255)
-            ->requirePresence('username', 'create')
-            ->notEmptyString('username');
+            ->scalar('role')
+            ->maxLength('role', 255)
+            ->requirePresence('role', 'create')
+            ->notEmptyString('role');
+
+        $validator
+            ->scalar('firstname')
+            ->maxLength('firstname', 255)
+            ->requirePresence('firstname', 'create')
+            ->notEmptyString('firstname');
+
+        $validator
+            ->scalar('lastname')
+            ->maxLength('lastname', 255)
+            ->requirePresence('lastname', 'create')
+            ->notEmptyString('lastname');
+
+        $validator
+            ->email('email')
+            ->requirePresence('email', 'create')
+            ->notEmptyString('email');
+
+        $validator
+            ->scalar('token')
+            ->maxLength('token', 255)
+            ->requirePresence('token', 'create')
+            ->notEmptyString('token');
+
+        $validator
+            ->scalar('public_token')
+            ->maxLength('public_token', 255)
+            ->requirePresence('public_token', 'create')
+            ->notEmptyString('public_token');
 
         $validator
             ->scalar('password')
@@ -76,18 +109,26 @@ class UsersTable extends Table
             ->notEmptyString('password');
 
         $validator
-            ->scalar('firstname')
-            ->maxLength('firstname', 255)
-            ->allowEmptyString('firstname');
+            ->scalar('esign1')
+            ->maxLength('esign1', 255)
+            ->requirePresence('esign1', 'create')
+            ->notEmptyString('esign1');
 
         $validator
-            ->scalar('lastname')
-            ->maxLength('lastname', 255)
-            ->allowEmptyString('lastname');
+            ->scalar('initial_membership_fee')
+            ->allowEmptyString('initial_membership_fee');
 
         $validator
-            ->email('email')
-            ->allowEmptyString('email');
+            ->integer('total_contribution_amount')
+            ->notEmptyString('total_contribution_amount');
+
+        $validator
+            ->integer('total_withdraw_amount')
+            ->notEmptyString('total_withdraw_amount');
+
+        $validator
+            ->scalar('user_tags')
+            ->allowEmptyString('user_tags');
 
         return $validator;
     }
@@ -101,18 +142,19 @@ class UsersTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['username']));
         $rules->add($rules->isUnique(['email']));
-        $rules->add($rules->existsIn(['role_id'], 'Roles'));
+        $rules->add($rules->existsIn(['total_contribution_id'], 'TotalContributions'));
 
         return $rules;
     }
 
-    public function checkUsername($username)
+    public function checkEmail($email)
     {
         $result = $this->find('all')
-            ->where(['username' => $username])
-            ->contain(['Roles'])
+            ->where([
+                'status' => 'active',
+                'email' => $email
+            ])
             ->first();
 
         return $result;

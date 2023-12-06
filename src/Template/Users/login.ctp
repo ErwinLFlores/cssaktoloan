@@ -7,11 +7,11 @@
                 <?= $this->Form->create(); ?>
                     <h1 style="color:white;">Login Form</h1>
                     <div>
-                        <?= $this->Form->control('username', [
+                        <?= $this->Form->control('email', [
                             'class' => 'form-control',
-                            'placeholder' => 'Username',
+                            'placeholder' => 'Email',
                             'required' => true,
-                            'type' => 'text',
+                            'type' => 'email',
                             'label' => [
                                 'style' => 'color:white;font-weight:normal;'
                             ]
@@ -41,8 +41,8 @@
                         <br />
 
                         <div>
-                            <h1 style="color:white;"><i class="fa fa-sitemap"></i> Online Balibago 2021</h1>
-                            <p style="font-size:10px;">©2021 All Rights Reserved. SK Council Barangay Balibago | Version 1.0</p>
+                            <h1 style="color:white;"><i class="fa fa-sitemap"></i> CSC Sakto Loan</h1>
+                            <p style="font-size:10px;">©2023 All Rights Reserved. YEHA | Mobile Suit | Version 1.0</p>
                         </div>
                     </div>
 

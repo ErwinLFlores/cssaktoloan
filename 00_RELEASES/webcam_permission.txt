@@ -1,3 +1,0 @@
-chrome://flags/#unsafely-treat-insecure-origin-as-secure
-
-but most of the time just allow camera access to site

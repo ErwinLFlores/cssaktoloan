@@ -2,23 +2,30 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
-use Cake\Auth\DefaultPasswordHasher;
 
 /**
  * User Entity
  *
  * @property int $id
- * @property int $status
- * @property string $username
+ * @property string $status
+ * @property string $role
+ * @property string $firstname
+ * @property string $lastname
+ * @property string $email
+ * @property string $token
+ * @property string $public_token
  * @property string $password
- * @property int $role_id
- * @property string|null $firstname
- * @property string|null $lastname
- * @property string|null $email
+ * @property string $esign1
+ * @property string|null $initial_membership_fee
+ * @property int $total_contribution_amount
+ * @property int $total_contribution_id
+ * @property int $total_withdraw_amount
+ * @property string|null $user_tags
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  *
- * @property \App\Model\Entity\Role $role
+ * @property \App\Model\Entity\TotalContribution $total_contribution
+ * @property \App\Model\Entity\Contribution[] $contributions
  */
 class User extends Entity
 {
@@ -32,8 +39,24 @@ class User extends Entity
      * @var array
      */
     protected $_accessible = [
-        '*' => true,
-        'id' => false
+        'status' => true,
+        'role' => true,
+        'firstname' => true,
+        'lastname' => true,
+        'email' => true,
+        'token' => true,
+        'public_token' => true,
+        'password' => true,
+        'esign1' => true,
+        'initial_membership_fee' => true,
+        'total_contribution_amount' => true,
+        'total_contribution_id' => true,
+        'total_withdraw_amount' => true,
+        'user_tags' => true,
+        'created' => true,
+        'modified' => true,
+        'total_contribution' => true,
+        'contributions' => true,
     ];
 
     /**
@@ -42,13 +65,7 @@ class User extends Entity
      * @var array
      */
     protected $_hidden = [
+        'token',
         'password',
     ];
-
-    protected function _setPassword($password)
-    {
-        if (strlen($password) > 0) {
-            return (new DefaultPasswordHasher)->hash($password);
-        }
-    }
 }

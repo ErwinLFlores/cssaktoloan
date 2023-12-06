@@ -1,5 +1,5 @@
 <?php
-    $cakeDescription = 'Online Balibago Portal';
+    $cakeDescription = 'CSC Sakto Loan';
 ?>
 <!DOCTYPE html>
 <html>
