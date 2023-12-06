@@ -58,8 +58,8 @@
                                 <?php if (count($data) > 0) : ?>
                                     <?php foreach ($data as $result) : ?>
                                         <tr>
-                                            <td><?php echo $result['terms']; ?></td>
-                                            <td><?php echo number_format($result['max_loan_amount'], 2); ?></td>
+                                            <td><?php echo $result['terms_of_payment']; ?></td>
+                                            <td><?php echo number_format($result['loan_amount'], 2); ?></td>
                                             <td>
                                                 <?php 
                                                     if ($result['approval_user_id'] == 0) {
@@ -75,6 +75,8 @@
                                                 <?php if ($result['approval_user_id'] == 0) { ?>
                                                     <a href="/loans/borrowUpdate/<?php echo $result['id']; ?>" class="btn btn-primary" >Update</a>
                                                     <a href="/loans/borrowDelete/<?php echo $result['id']; ?>" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
+                                                <?php } else { ?>
+                                                    <a href="/loans/statementofaccount/<?php echo $result['id']; ?>" class="btn btn-secondary" >Statement of Account</a>
                                                 <?php } ?>
                                             </td>
                                         </tr>

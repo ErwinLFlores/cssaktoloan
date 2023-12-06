@@ -12,11 +12,11 @@
                         ]); ?>
                             <div class="form-group">
                                 <label for="firstName">Terms</label>
-                                <input type="text" class="form-control" name="terms" id="terms" placeholder="Enter your Terms" value="<?php echo $loan['terms']; ?>">
+                                <input type="text" class="form-control" name="terms_of_payment" id="terms_of_payment" placeholder="Enter your Terms" value="<?php echo $loan['terms_of_payment']; ?>">
                             </div>
                             <div class="form-group">
                                 <label for="lastName">Loan Amount</label>
-                                <input type="text" class="form-control" name="max_loan_amount" id="max_loan_amount" placeholder="Enter your Loan Amount" value="<?php echo $loan['max_loan_amount']; ?>">
+                                <input type="text" class="form-control" name="loan_amount" id="loan_amount" placeholder="Enter your Loan Amount" value="<?php echo $loan['loan_amount']; ?>">
                             </div>
                             <div class="form-group">
                                 <label for="lastName">Date Request</label>

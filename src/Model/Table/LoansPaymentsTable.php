@@ -7,7 +7,7 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Loans Model
+ * LoansPayments Model
  *
  * @method \App\Model\Entity\Loan get($primaryKey, $options = [])
  * @method \App\Model\Entity\KeeLoanper newEntity($data = null, array $options = [])
@@ -20,7 +20,7 @@ use Cake\Validation\Validator;
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class LoansTable extends Table
+class LoansPaymentsTable extends Table
 {
     /**
      * Initialize method
@@ -32,7 +32,7 @@ class LoansTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('loans');
+        $this->setTable('loans_payments');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
@@ -52,13 +52,13 @@ class LoansTable extends Table
             ->allowEmptyString('id', null, 'create');
 
         $validator
-            ->integer('user_id');
+            ->integer('loans_id');
 
         $validator
-            ->integer('terms_of_payment');
+            ->integer('user_id');
         
         $validator
-            ->integer('loan_amount');
+            ->integer('amount');
         
         $validator
             ->integer('approval_user_id');
