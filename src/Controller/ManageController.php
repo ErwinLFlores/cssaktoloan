@@ -272,4 +272,122 @@ class ManageController extends AppController
         }
  
     }
+
+    public function release($member_search = null)
+    {
+        $this->set('page_title', 'Loans List');
+        $isPaginated = true;
+        $searched_data = $this->request->getQuery('search');
+        $searched_conditions = "Loans.status = 3 ";
+
+        if (!empty($searched_data)) {
+            $searched_conditions =  "AND (Users.email LIKE '%" . $searched_data . "%'";
+            $searched_conditions .=  " OR Users.firstname LIKE '%" . $searched_data . "%'";
+            $searched_conditions .=  " OR Users.lastname LIKE '%" . $searched_data . "%')";
+        }
+
+        $this->paginate = array(
+            'conditions' => [$searched_conditions],
+            'contain' => ['Users'],
+            'page' => 1,
+            'order' => ['id' => 'DESC']
+        );
+        $loans = $this->paginate('Loans');
+        
+        if (
+            (!empty($member_search)) 
+            && ($member_search == 1)
+        ) {
+            $this->set('member_search', $member_search);
+        }
+
+        $this->set(compact('loans'));
+        $this->set(compact('searched_data'));
+        $this->set(compact('isPaginated'));
+    }
+
+    public function releaseview($loan_id)
+    {
+        $this->set('page_title', 'For Loan Release');
+        $data = $this->Loans->find('all')
+            ->where([
+                'Loans.id' => $loan_id,
+                'Loans.status' => 3
+            ])
+            ->contain(['Users'])
+            ->first();
+        $contract = null;
+
+        if (empty($data)) {
+            $this->Flash->formerror(__('Data not Found.'));
+            return $this->redirect(['controller' => 'manage', 'action' => 'release']);
+        } else {
+            $this->loadModel('Contracts');
+            $contract = $this->Contracts->find('all')
+                ->where([
+                    'loan_id' => $loan_id,
+                    'status' => 'active'
+                ])
+                ->first();
+            $contract = $contract->message;
+        }
+        
+        $this->set(compact('data'));
+        $this->set(compact('contract'));
+    }
+
+    public function verifyrelease($loan_id, $process)
+    {
+        $data = $this->Loans->find('all')
+            ->where([
+                'id' => $loan_id,
+                'status' => 3
+            ])
+            ->first();
+        $data = $this->Loans->patchEntity($data, ['status' => 5]);
+        
+        if ($data = $this->Loans->save($data)) {
+            $message = 'Loan #' . $data->id . ' has been released. Thank you for your patience!';
+            $this->log_loan_approval_logs($data->user_id, $message);
+            $this->Flash->success($message);
+            
+            return $this->redirect(['controller' => 'manage', 'action' => 'loans']);
+        }
+    }
+
+    public function view($loan_id)
+    {
+        $this->set('page_title', 'For Loan Release');
+        $data = $this->Loans->find('all')
+            ->where([
+                'Loans.id' => $loan_id
+            ])
+            ->contain(['Users'])
+            ->first();
+        $contract = null;
+
+        if (empty($data)) {
+            $this->Flash->formerror(__('Data not Found.'));
+            return $this->redirect(['controller' => 'manage', 'action' => 'loans']);
+        } else {
+            $this->loadModel('Contracts');
+            $contract = $this->Contracts->find('all')
+                ->where([
+                    'loan_id' => $loan_id,
+                    'status' => 'active'
+                ])
+                ->first();
+            
+            if (
+                (isset($contract->message))
+                && (!empty($contract->message))
+            ) {
+                $contract = $contract->message;
+            }
+        }
+        
+        $this->set(compact('data'));
+        $this->set(compact('contract'));
+    }
+
 }

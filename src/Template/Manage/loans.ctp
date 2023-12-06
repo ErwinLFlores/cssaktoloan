@@ -55,9 +55,9 @@
                                         ['lightsteelblue', 'For Verification'],
                                         ['whitesmoke', 'For Contract Signing'],
                                         ['lightpink', 'For User Contract Agreement'],
-                                        ['lightblue', 'For Release'],
+                                        ['blue; color: white', 'For Release'],
                                         ['lightsalmon', 'Rejected'],
-                                        ['lightgreen', 'Approved'],
+                                        ['lightgreen', 'Approved and Released'],
                                         ['grey; color: white', 'Done']
                                     ];
                                 ?>

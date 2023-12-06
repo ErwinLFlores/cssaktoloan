@@ -54,7 +54,7 @@
                                     $statuses = [
                                         ['lightsteelblue', 'For Verification'],
                                         ['whitesmoke', 'For Contract Signing'],
-                                        ['lightblue', 'For Release'],
+                                        ['blue; color: white', 'For Release'],
                                         ['lightsalmon', 'Rejected'],
                                         ['lightgreen', 'Approved'],
                                         ['grey; color: white', 'Done']

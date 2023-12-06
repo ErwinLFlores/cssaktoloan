@@ -44,7 +44,7 @@
                             <li><a href="/manage/loans">View All</a></li>
                             <li><a href="/manage/approval">For Approval</a></li>
                             <li><a href="/manage/contracts">For AI Contract</a></li>
-                            <li><a href="/manage/pending">For Release</a></li>
+                            <li><a href="/manage/release">For Release</a></li>
                         </ul>
                     </li>
                     <li class="<?php echo ($this->request->params['controller'] == 'Investors') ? 'active' : ''; ?>">

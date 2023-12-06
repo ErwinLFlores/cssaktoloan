@@ -14,7 +14,7 @@
                     <div class="col-md-1 col-xs-12"></div>
                     <div class="col-md-10 col-xs-12 no-padding" id="report001" style="border: 1px solid grey;width:98%;">
                         <div class="col-md-12" style="text-align:center;">
-                            <h1> LOAN REQUEST INFORMATION </h1>
+                            <h1> LOAN INFORMATION </h1>
                         </div>
                         <hr style="background-color: grey; margin:0px;border: 1px solid grey;"/>
                         <div id="head-family" class="col-md-12 no-padding">
@@ -24,7 +24,7 @@
                                         style="width:150px;margin:10px 10px 5px 10px;border: 1px solid black;">
                                 </div>
                             </div>
-                            <div class="col-md-10" style="color:black;">
+                            <div class="col-md-10" style="color:black; padding: 15px;">
                                 <div class="col-md-4 no-padding" style="font-size:13px;">
                                     <div style="padding-top:5px;"><b><u>PERSONAL INFORMATION</u></b></div>
 
@@ -152,6 +152,56 @@
                                 </div>
                             </div>
                         </div>
+                        <hr/>
+                        <div style="color: black;" class="col-md-12">
+                            <?php echo($contract); ?>
+                        </div>
+
+                        <?php if (
+                            (isset($contract))
+                            && (!empty($contract))
+                        ) { ?>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <div style="color: black;" class="col-md-12">
+                                <?php $user_data = $this->request->session()->read('Auth.User'); ?>
+                                <div class="col-md-6">
+                                    <div class="col-md-12" style="text-align:center;">
+                                        <img src="/images/samplesigns/esign2.png" style="max-width: 200px;" alt="">
+                                        <div>
+                                            <span style="font-size: 16px;"> <?=h($data->user->firstname);?> <?=h($data->user->lastname);?></span> </br>
+                                            <span style="font-size: 12px;"> <b>Borrower</b></span> </br>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-12" style="text-align:center;">
+                                        <img src="/images/samplesigns/esign2.png" style="max-width: 200px;" alt="">
+                                        <div>
+                                            <span style="font-size: 16px;"> <?=h($user_data->firstname);?> <?=h($user_data->lastname);?></span> </br>
+                                            <span style="font-size: 12px;"> <b>Approving Admin</b></span> </br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr/>
+                        <?php } else { ?>
+                            <?php 
+                                $statuses = [
+                                    ['lightsteelblue', 'For Verification'],
+                                    ['whitesmoke', 'For Contract Signing'],
+                                    ['blue; color: white', 'For Release'],
+                                    ['lightsalmon', 'Rejected'],
+                                    ['lightgreen', 'Approved'],
+                                    ['grey; color: white', 'Done']
+                                ];
+                            ?>
+                            <div style="color: black;" class="col-md-12">
+                                <b>Status : <?=h(ucwords($statuses[$data->status][1]));?></b>
+                            </div>
+                        <?php } ?>
                         <style>
                             table > thead > tr > th {
                                 padding: 3px !important;
@@ -174,9 +224,6 @@
                     <div class="col-md-1 col-xs-12"></div>
                 </div>
                 <br/>
-                <div class="col-md-12 card-footer">
-                    
-                </div>
             </div>
         </div>
     </div> 

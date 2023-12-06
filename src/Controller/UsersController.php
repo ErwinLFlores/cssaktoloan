@@ -53,6 +53,8 @@ class UsersController extends AppController
                 } else {
                     return $this->redirect(['controller' => 'pages', 'action' => 'home']);
                 }
+                $this->log_login_logs($user->email, 'Logged In', $this->request->clientIp());
+
              } else {
                 $this->Flash->error(__('Entry is either incorrect or invalid. Try again.'));
             }

@@ -44,6 +44,57 @@ class LoansController extends AppController
 
     }
 
+    public function viewcontract($loan_id, $process)
+    {
+        $this->set('page_title', 'For User Contract Loan | Agreement');
+        $data = $this->Loans->find('all')
+            ->where([
+                'Loans.id' => $loan_id,
+                'Loans.status' => 2
+            ])
+            ->contain(['Users'])
+            ->first();
+        $contract = null;
+
+        if (empty($data)) {
+            $this->Flash->formerror(__('Data not Found.'));
+            return $this->redirect(['controller' => 'loans', 'action' => 'borrow']);
+        } else {
+            $this->loadModel('Contracts');
+            $contract = $this->Contracts->find('all')
+                ->where([
+                    'loan_id' => $loan_id,
+                    'status' => 'active'
+                ])
+                ->first();
+            $contract = $contract->message;
+        }
+
+        $this->set(compact('data'));
+        $this->set(compact('contract'));
+    }
+
+    public function agreecontract($loan_id, $process)
+    {
+        $current_index = $this->oneWordStatusIndex($process);
+        $next_index = $this->getStatusByIndex(intval($current_index) + 1);
+        $data = $this->Loans->find('all')
+            ->where([
+                'id' => $loan_id,
+                'status' => 2
+            ])
+            ->first();
+        $data = $this->Loans->patchEntity($data, ['status' => 3]);
+        
+        if ($data = $this->Loans->save($data)) {
+            $message = 'You have agreed Loan #' . $data->id . ' contract terms and conditions. Wait for ' 
+                . ucwords($next_index) . ' update';
+            $this->log_loan_approval_logs($data->user_id, $message);
+            $this->Flash->success($message);
+                
+            return $this->redirect(['controller' => 'loans', 'action' => 'borrow']);
+        }
+    }
 
     public function borrow()
     {
@@ -54,7 +105,7 @@ class LoansController extends AppController
             [
                 'user_id' => $user_id
             ]
-        )->all();
+        )->order(['id' => 'desc'])->all();
 
         $loan = $this->Loans->find('all')->where(
             [

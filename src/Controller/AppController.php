@@ -81,7 +81,7 @@ class AppController extends Controller
             ['lightpink' => 'For User Contract Agreement'],
             ['lightblue' => 'For Release'],
             ['red' => 'Rejected'],
-            ['green' => 'Approved'],
+            ['green' => 'Approved and Released'],
             ['grey' => 'Done']
         ];
 
