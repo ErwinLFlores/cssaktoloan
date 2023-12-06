@@ -49,7 +49,12 @@ class LoansController extends AppController
     {
         $this->set('page_title', 'Borrow');
         $user_id = $this->Auth->user('id');
-        $data = $this->Loans->find('all')->all();
+
+        $data = $this->Loans->find('all')->where(
+            [
+                'user_id' => $user_id
+            ]
+        )->all();
 
         $loan = $this->Loans->find('all')->where(
             [
@@ -71,7 +76,7 @@ class LoansController extends AppController
             $loan = $this->Loans->newEntity();
             $loan = $this->Loans->patchEntity($loan, $this->request->getData());
             if ($this->Loans->save($loan)) {
-                $this->Flash->success(__('The loan has been saved.'));
+                $this->Flash->success(__('The borrow request has been saved.'));
                 return $this->redirect(['action' => 'borrow']);
             }
             $this->Flash->error(__('Unable to add the user.'));
