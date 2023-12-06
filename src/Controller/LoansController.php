@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use PDO;
 
 /**
  * Loans Controller
@@ -110,5 +111,20 @@ class LoansController extends AppController
             $this->Flash->error(__('Unable to delete the borrow request.'));
         }
         return $this->redirect(['action' => 'borrow']);
+    }
+
+    public function statementofaccount($id)
+    {   
+        $this->loadModel('LoansPayments');
+
+        $loan = $this->Loans->get($id);
+
+        $loan_payments = $this->LoansPayments->find('all')->where(
+            [
+                'loans_id' => $id,
+            ]
+        )->all();
+
+        $this->set(compact(['loan', 'loan_payments']));
     }
 }
