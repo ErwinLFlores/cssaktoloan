@@ -100,7 +100,7 @@ class PagesController extends AppController
 
         $disk = $this->disk_report();
         $this->set('disk', $disk);
-        $this->set('logged_name', "Admin " . $this->Auth->user('firstname'));
+        $this->set('logged_name', $this->Auth->user('firstname'));
 
 
     }

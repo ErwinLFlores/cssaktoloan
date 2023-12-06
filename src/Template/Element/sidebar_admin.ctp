@@ -21,7 +21,7 @@
             </div> -->
             <?php $user_data = $this->request->session()->read('Auth.User'); ?>
             <div class="profile_info" style="width:100%;text-align:center;padding:10px;">
-                WELCOME, <h2><?=h(strtoupper($user_data->firstname));?></h2>
+                WELCOME, <h2>ADMIN <?=h(strtoupper($user_data->firstname));?></h2>
             </div>
         </div>
         <!-- /menu profile quick info -->
@@ -39,11 +39,22 @@
                         </a>
                     </li>
                     <li class="<?php echo ($this->request->params['controller'] == 'Loans') ? 'active' : ''; ?>">
-                        <a><i class="fa fa-home"></i> Loans <span class="fa fa-chevron-down"></span></a>
+                        <a><i class="fa fa-money"></i> Loans <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="/loans">Manage</a></li>
-                            <li><a href="/loans/add">Request</a></li>
-                            <li><a href="/loans/borrow">Borrow</a></li>
+                            <li><a href="/manage/loans">View All</a></li>
+                            <li><a href="/manage/approval">For Approval</a></li>
+                            <li><a href="/manage/contracts">For AI Contract</a></li>
+                            <li><a href="/manage/pending">For Release</a></li>
+                        </ul>
+                    </li>
+                    <li class="<?php echo ($this->request->params['controller'] == 'Investors') ? 'active' : ''; ?>">
+                        <a><i class="fa fa-users"></i> Manage <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="#">Investors
+                                <span class="label label-success pull-right">Coming Soon</span>
+                            </a></li>
+                            <li><a href="/members">Members</a></li>
+                            <li><a href="/contributions">Contributions</a></li>
                         </ul>
                     </li>
                 </ul>

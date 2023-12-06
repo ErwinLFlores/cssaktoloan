@@ -69,6 +69,66 @@ class AppController extends Controller
         
     }
 
+    public function getStatus($status_int)
+    {
+        $statuses = [
+            ['grey' => 'For Verification'],
+            ['whitesmoke' => 'For Contract Signing'],
+            ['lightpink' => 'For User Contract Agreement'],
+            ['lightblue' => 'For Release'],
+            ['red' => 'Rejected'],
+            ['green' => 'Approved'],
+            ['grey' => 'Done']
+        ];
+
+        return $statuses[$status];
+    }
+
+    public function getStatusByIndex($status)
+    {
+        $statuses = [
+            'verification',
+            'contract signing',
+            'user contract agreement',
+            'release',
+            'rejected',
+            'approved',
+            'done',
+        ];
+
+        return $statuses[$status];
+    }
+
+    public function getStatusIndex($status)
+    {
+        $statuses = [
+            'for verification',
+            'for contract signing',
+            'user contract agreement',
+            'for release',
+            'rejected',
+            'approved',
+            'done',
+        ];
+
+        return array_search($status, $statuses);
+    }
+
+    public function oneWordStatusIndex($status)
+    {
+        $statuses = [
+            'verification',
+            'contract',
+            'agreement',
+            'release',
+            'rejected',
+            'approved',
+            'done',
+        ];
+
+        return array_search($status, $statuses);
+    }
+
     protected function validateAdmin($user)
     {
         if (isset($user['role'])) {
@@ -121,6 +181,19 @@ class AppController extends Controller
             'ip_address' => $ip_address
         ]);
         $result = $this->LoginLogs->save($login_logs);
+        return $result;
+    }
+
+    public function log_loan_approval_logs($user_id, $message)
+    {
+        $this->loadModel('LoginLogs');
+        $login_logs = $this->LoginLogs->newEntity([
+            'user_id' => $user_id,
+            'message' => $message,
+            'action_provider' => $this->Auth->user('email')
+        ]);
+        $result = $this->LoginLogs->save($login_logs);
+        
         return $result;
     }
 
