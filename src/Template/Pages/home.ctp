@@ -18,23 +18,32 @@
     $currentTime = time();
 ?>
 <div class="container-fluid">
-    <div class="col-md-12" style="padding: 5px;">
+    <!-- <div class="col-md-12" style="padding: 5px;">
         <div class="card">
             <div class="tile_count">
-                <?php 
-                    foreach ($disk as $key => $value) { 
-                        if ($key === 'free_disk_converted') {
-                            continue;
-                        } else {
-                ?>
+               
                     <div class="col-md-3 col-sm-12 tile_stats_count">
-                        <span class="count_top"><i class="fa fa-floppy-disk"></i> <?=h(ucwords(str_replace('_', ' ', $key)));?></span>
-                        <div class="count"><?=h($value);?></div>
+                        <span class="count_top"><i class="fa fa-floppy-disk"></i> Past Due </span>
+                        <div class="count">2</div>
                     </div>
-                <?php }} ?>
+
+                    <div class="col-md-3 col-sm-12 tile_stats_count">
+                        <span class="count_top"><i class="fa fa-floppy-disk"></i> Current Due </span>
+                        <div class="count">2</div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-12 tile_stats_count">
+                        <span class="count_top"><i class="fa fa-floppy-disk"></i> Total Loan Amount </span>
+                        <div class="count">2</div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-12 tile_stats_count">
+                        <span class="count_top"><i class="fa fa-floppy-disk"></i>  </span>
+                        <div class="count">2</div>
+                    </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <div class="row col-md-12">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <?= $this->Flash->render(); ?>
@@ -45,7 +54,9 @@
                     <div class="tile_count">
                         <div class="col-md-6 col-sm-6  tile_stats_count">
                             <span class="count_top"><i class="fa fa-user"></i> Total Contributions</span>
-                            <div class="count">TODO</div>
+                            <div class="count">
+                                <?php echo isset($total_contribution) ? $total_contribution : 0; ?>
+                            </div>
                             <span class="count_bottom">Last Access Date 
                                 <i class="green">
                                     TODO
@@ -54,7 +65,9 @@
                         </div>
                         <div class="col-md-6 col-sm-6  tile_stats_count">
                             <span class="count_top"><i class="fa fa-user"></i> Total Loans</span>
-                            <div class="count">TODO</div>
+                            <div class="count">
+                                <?php echo isset($total_loan) ? $total_loan : 0; ?>
+                            </div>
                             <span class="count_bottom">Last Access Date 
                                 <i class="green">
                                     TODO

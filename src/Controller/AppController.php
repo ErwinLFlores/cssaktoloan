@@ -62,6 +62,10 @@ class AppController extends Controller
     {
         date_default_timezone_set('Asia/Manila');
         $this->Auth->allow(['index']);
+
+
+        $availableBorrowRequest = $this->availableBorrowRequest();
+        $this->set('availableBorrowRequest', $availableBorrowRequest);
     }
 
     public function beforeRender(Event $event)
@@ -122,6 +126,23 @@ class AppController extends Controller
         ]);
         $result = $this->LoginLogs->save($login_logs);
         return $result;
+    }
+
+    public function availableBorrowRequest()
+    {
+        $this->loadModel('Loans');
+
+        $user_id = $this->Auth->user('id');
+        $status = [3,5];
+        $loan = $this->Loans->find('all')->where(
+            [
+                'user_id' => $user_id,
+                'status NOT IN' => $status,
+            ]
+        )->all();
+
+
+        return count($loan);
     }
 
 }
