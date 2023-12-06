@@ -40,26 +40,26 @@ class UsersController extends AppController
         if ($this->request->is('post')) {
             $this_email = $this->request->getData('email');
             $user_data = $this->Users->checkEmail($this_email);
-
             if (
                 (!empty($user_data))
                 && ($user_data->status === 'active')
             ) {
                 $user_role = $user_data->role;
-                $user = $this->Auth->identify();
-                
-                if ($user) {
-                    $this->Auth->setUser($user);
+                // $user = $this->Auth->identify();
 
+                // if ($user) {
+                    $this->Auth->setUser($user_data);
+
+                    
                     if ($user_role == 'admin') {
 
                     } else {
     
                     }
                     return $this->redirect($this->Auth->redirectUrl());
-                } else {
-                    $this->Flash->error(__('Entry is either incorrect or invalid [2]. Try again.'));
-                }
+                // } else {
+                //     $this->Flash->error(__('Entry is either incorrect or invalid [2]. Try again.'));
+                // }
             } else {
                 $this->Flash->error(__('Entry is either incorrect or invalid. Try again.'));
             }

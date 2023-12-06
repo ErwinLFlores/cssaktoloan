@@ -43,6 +43,7 @@
                         <ul class="nav child_menu">
                             <li><a href="/loans">Manage</a></li>
                             <li><a href="/loans/add">Request</a></li>
+                            <li><a href="/loans/borrow">Borrow</a></li>
                         </ul>
                     </li>
                 </ul>
