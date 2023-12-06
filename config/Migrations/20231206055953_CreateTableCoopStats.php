@@ -18,22 +18,20 @@ class CreateTableCoopStats extends AbstractMigration
             'default' => 'active'
         ]);
 
-        $table->addColumn('interest_amount', 'integer', [
+        $table->addColumn('action', 'integer', [
             'null' => false,
         ]);
 
-        $table->addColumn('interest_release', 'datetime', [
+        $table->addColumn('action_value', 'datetime', [
             'null' => false,
         ]);
 
         $table->addColumn('created', 'datetime', [
-            // 'default' => 'CURRENT_TIMESTAMP' => error on migrations staging
             'default' => null,
             'null' => false
         ]); 
 
         $table->addColumn('modified', 'datetime', [
-            // 'default' => 'CURRENT_TIMESTAMP' => error on migrations staging
             'default' => null,
             'null' => false
         ]);

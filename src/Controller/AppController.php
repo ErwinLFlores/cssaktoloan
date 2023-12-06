@@ -69,17 +69,27 @@ class AppController extends Controller
         
     }
 
-    protected function validateAccess($user, $custom_controller = null, $custom_action = null)
+    protected function validateAdmin($user)
     {
-        $current_action = $this->request->params;
+        if (isset($user['role'])) {
+            if ($user['role'] === 'admin') {
+                $this->redirect(['controller' => 'pages', 'action' => 'homeplus']);
 
-        if ($custom_controller != null) {
-            $current_action['controller'] = $custom_controller;
-        }
+                return true;
+            } else if ($user['role'] === 'user') {
+                $this->redirect(['controller' => 'pages', 'action' => 'home']);
 
-        if ($custom_action != null) {
-            $current_action['action'] = $custom_action;
-        }
+                return false;
+            }  
+            else $this->redirect($this->Auth->logout());
+        } 
+    }
+
+    protected function validateAccess($user)
+    {
+        if (isset($user['role'])) {
+            return true;
+        } else $this->redirect($this->Auth->logout());
     }
 
     public function passwordChecker($password) 
@@ -101,4 +111,17 @@ class AppController extends Controller
             return true;
         }
     }
+
+    public function log_login_logs($username, $message, $ip_address)
+    {
+        $this->loadModel('LoginLogs');
+        $login_logs = $this->LoginLogs->newEntity([
+            'username' => $username,
+            'message' => $message,
+            'ip_address' => $ip_address
+        ]);
+        $result = $this->LoginLogs->save($login_logs);
+        return $result;
+    }
+
 }

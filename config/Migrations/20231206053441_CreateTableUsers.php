@@ -50,8 +50,13 @@ class CreateTableUsers extends AbstractMigration
             'null' => false,
         ]);
 
-        $table->addColumn('initial_membership_fee', 'text', [
+        $table->addColumn('initial_membership_fee', 'integer', [
             'null' => true,
+        ]);
+
+        $table->addColumn('monthly_contribution_amount', 'integer', [
+            'null' => false,
+            'default' => 200,
         ]);
 
         $table->addColumn('total_contribution_amount', 'integer', [
@@ -59,13 +64,13 @@ class CreateTableUsers extends AbstractMigration
             'default' => 0
         ]);
 
-        $table->addColumn('total_contribution_number', 'integer', [
+        $table->addColumn('total_contribution_count', 'integer', [
             'null' => false,
             'default' => 0
             // if less 4, borrow disabled
         ]);
 
-        $table->addColumn('total_contribution_id', 'integer', [
+        $table->addColumn('last_contribution_id', 'integer', [
             'null' => false,
             'default' => 0
         ]);
@@ -75,18 +80,21 @@ class CreateTableUsers extends AbstractMigration
             'default' => 0
         ]);
 
+        $table->addColumn('regularization_date', 'date', [
+            'default' => null,
+            'null' => false
+        ]);
+
         $table->addColumn('user_tags', 'text', [
             'null' => true,
         ]);
         
         $table->addColumn('created', 'datetime', [
-            // 'default' => 'CURRENT_TIMESTAMP' => error on migrations staging
             'default' => null,
             'null' => false
         ]); 
 
         $table->addColumn('modified', 'datetime', [
-            // 'default' => 'CURRENT_TIMESTAMP' => error on migrations staging
             'default' => null,
             'null' => false
         ]);

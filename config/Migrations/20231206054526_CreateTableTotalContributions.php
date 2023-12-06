@@ -22,7 +22,11 @@ class CreateTableTotalContributions extends AbstractMigration
             'null' => false,
         ]);
 
-        $table->addColumn('total_contribution', 'integer', [
+        $table->addColumn('contribution_amount', 'integer', [
+            'null' => false,
+        ]);
+
+        $table->addColumn('total_contributions', 'integer', [
             'null' => false,
         ]);
         

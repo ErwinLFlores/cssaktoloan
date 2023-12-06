@@ -91,5 +91,17 @@ class PagesController extends AppController
 
         $disk = $this->disk_report();
         $this->set('disk', $disk);
+        $this->set('logged_name', $this->Auth->user('firstname'));
+    }
+
+    public function homeplus() 
+    {   
+        $this->set('page_title', 'Admin Dashboard');
+
+        $disk = $this->disk_report();
+        $this->set('disk', $disk);
+        $this->set('logged_name', "Admin " . $this->Auth->user('firstname'));
+
+
     }
 }

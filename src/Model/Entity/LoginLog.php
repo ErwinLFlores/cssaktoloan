@@ -9,6 +9,7 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property string $username
  * @property string|null $message
+ * @property string|null $ip_address
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  */
@@ -24,7 +25,10 @@ class LoginLog extends Entity
      * @var array
      */
     protected $_accessible = [
-        '*' => true,
-        'id' => false
+        'username' => true,
+        'message' => true,
+        'ip_address' => true,
+        'created' => true,
+        'modified' => true,
     ];
 }

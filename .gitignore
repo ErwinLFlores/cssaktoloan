@@ -5,7 +5,7 @@
 /logs/*
 /tmp/*
 /vendor/*
-/webroot/SAP/*
+/config/Migrations/schema-dump.default.lock
 
 # OS generated files #
 ######################

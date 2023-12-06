@@ -16,13 +16,12 @@ class UsersController extends AppController
     public function initialize()
     {
         parent::initialize();
-        $this->validateAccess($this->Auth->user());
     }
 
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow(['add', 'login', 'logout']);
+        $this->Auth->allow(['login', 'logout']);
     }
 
     public function beforeRender(Event $event)
@@ -34,7 +33,7 @@ class UsersController extends AppController
     public function login()
     {
         if (!empty($this->Auth->user())) {
-            $this->redirect('/');
+            $this->redirect('/home');
         }
 
         if ($this->request->is('post')) {
@@ -46,21 +45,15 @@ class UsersController extends AppController
             ) {
                 $user_role = $user_data->role;
                 // $user = $this->Auth->identify();
-
-                // if ($user) {
-                    $this->Auth->setUser($user_data);
+                $this->Auth->setUser($user_data);
 
                     
-                    if ($user_role == 'admin') {
-
-                    } else {
-    
-                    }
-                    return $this->redirect($this->Auth->redirectUrl());
-                // } else {
-                //     $this->Flash->error(__('Entry is either incorrect or invalid [2]. Try again.'));
-                // }
-            } else {
+                if ($user_role == 'admin') {
+                    return $this->redirect(['controller' => 'pages', 'action' => 'homeplus']);
+                } else {
+                    return $this->redirect(['controller' => 'pages', 'action' => 'home']);
+                }
+             } else {
                 $this->Flash->error(__('Entry is either incorrect or invalid. Try again.'));
             }
         }
@@ -68,7 +61,7 @@ class UsersController extends AppController
 
     public function logout()
     {
-        $user = $this->Auth->user('username');
+        $user = $this->Auth->user('email');
         $this->log_login_logs($user, 'Logged Out', $this->request->clientIp());
         return $this->redirect($this->Auth->logout());
     }
