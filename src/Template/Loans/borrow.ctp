@@ -9,14 +9,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="col-sm-6 no-padding">
-                        <a href="borrowAdd">
-
-                            <?php if (empty($loan)) { ?>
-                                <button class="btn btn-primary">
-                                    Create Borrow Form
-                                </button>
-                            <?php } ?>
-                        </a>
+                        
                     </div>
 
                     <div class="col-sm-6" style="padding-right:0px;">
@@ -62,17 +55,43 @@
                                             <td><?php echo number_format($result['loan_amount'], 2); ?></td>
                                             <td>
                                                 <?php 
-                                                    if ($result['approval_user_id'] == 0) {
-                                                        echo "<h6><span class='badge badge-danger'>Pending</span></h6>";
-                                                    } else {    
-                                                        echo "<h6><span class='badge badge-success'>Approved</span></h6>";
+                                                    // 0 = for verification
+                                                    // 1 = for contract signing
+                                                    // 2 = for release
+                                                    // 3 = rejected
+                                                    // 4 = approved
+                                                    // 5 = done 
+
+                                                    switch ($result['status']) {
+                                                        case 0:
+                                                            echo "<h6><span class='badge badge-primary'>for verification</span></h6>";
+                                                            break;
+                                                        case 1:
+                                                            echo "<h6><span class='badge badge-warning'>for contract signing</span></h6>";
+                                                            break;
+                                                        case 2:
+                                                            echo "<h6><span class='badge badge-info'>for release</span></h6>";
+                                                            break;
+                                                        case 3:
+                                                            echo "<h6><span class='badge badge-danger'>Rejected</span></h6>";
+                                                            break;
+                                                        case 4:
+                                                            echo "<h6><span class='badge badge-success'>Approved</span></h6>";
+                                                            break;
+                                                        case 5:
+                                                            echo "<h6><span class='badge badge-secondary'>Done</span></h6>";
+                                                            break;
+                                                        // add more cases as needed
+                                                        default:
+                                                        echo "";
                                                     }
+
                                                 ?>
                                             </td>
                                                 
                                             <td><?php echo $result['created']; ?></td>
                                             <td>
-                                                <?php if ($result['approval_user_id'] == 0) { ?>
+                                                <?php if ($result['status'] == 0) { ?>
                                                     <a href="/loans/borrowUpdate/<?php echo $result['id']; ?>" class="btn btn-primary" >Update</a>
                                                     <a href="/loans/borrowDelete/<?php echo $result['id']; ?>" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
                                                 <?php } else { ?>

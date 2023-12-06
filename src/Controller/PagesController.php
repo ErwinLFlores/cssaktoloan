@@ -89,9 +89,31 @@ class PagesController extends AppController
     {   
         $this->set('page_title', 'Dashboard');
 
+        $this->loadModel('Loans');
+        $this->loadModel('Contributions');
+
+        $user_id = $this->Auth->user('id');
+        $loan = $this->Loans->find('all')->where(
+            [
+                'user_id' => $user_id
+            ]
+        );
+
+        $total_contribution = 0;
+
+        // $total_loan = $loan->sumOf('loan_amount');
+        $total_loan = count($loan->all());
+
         $disk = $this->disk_report();
         $this->set('disk', $disk);
-        $this->set('logged_name', $this->Auth->user('firstname'));
+
+        $logged_name = $this->Auth->user('firstname');
+
+        $this->set(compact([
+            'logged_name', 
+            'total_loan', 
+            'total_contribution'
+        ]));
     }
 
     public function homeplus() 

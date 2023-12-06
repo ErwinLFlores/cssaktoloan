@@ -58,7 +58,7 @@ class LoansPaymentsTable extends Table
             ->integer('user_id');
         
         $validator
-            ->integer('amount');
+            ->scalar('amount');
         
         $validator
             ->integer('approval_user_id');

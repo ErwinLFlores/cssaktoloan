@@ -41,8 +41,10 @@
                     <li class="<?php echo ($this->request->params['controller'] == 'Loans') ? 'active' : ''; ?>">
                         <a><i class="fa fa-home"></i> Loans <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="/loans">Manage</a></li>
-                            <li><a href="/loans/add">Request</a></li>
+                            <!-- <li><a href="/loans">Manage</a></li> -->
+                                <?php if ($availableBorrowRequest == 0) { ?>
+                                    <li><a href="/loans/borrowAdd">Request </a></li>
+                                <?php } ?>
                             <li><a href="/loans/borrow">Borrow</a></li>
                         </ul>
                     </li>
