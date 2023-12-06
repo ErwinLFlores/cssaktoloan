@@ -36,7 +36,7 @@
         </div>
     </div>
     <div class="row col-md-12">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="col-lg-12 col-md-6 col-sm-12 col-xs-12">
             <?= $this->Flash->render(); ?>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -45,19 +45,19 @@
                     <div class="tile_count">
                         <div class="col-md-6 col-sm-6  tile_stats_count">
                             <span class="count_top"><i class="fa fa-user"></i> Total Contributions</span>
-                            <div class="count">TODO</div>
+                            <div class="count"><?=h($total_contribution);?></div>
                             <span class="count_bottom">Last Access Date 
                                 <i class="green">
-                                    TODO
+                                    <?=h(date('Y-M-d H:i A'));?>
                                 </i><br/>
                             </span>
                         </div>
                         <div class="col-md-6 col-sm-6  tile_stats_count">
                             <span class="count_top"><i class="fa fa-user"></i> Total Loans</span>
-                            <div class="count">TODO</div>
+                            <div class="count"><?=h($total_loan);?></div>
                             <span class="count_bottom">Last Access Date 
                                 <i class="green">
-                                    TODO
+                                    <?=h(date('Y-M-d H:i A'));?>
                                 </i><br/>
                             </span>
                         </div>
@@ -69,19 +69,19 @@
                     <div class="tile_count">
                         <div class="col-md-6 col-sm-6  tile_stats_count">
                             <span class="count_top"><i class="fa fa-user"></i> For Approval </span>
-                            <div class="count">TODO</div>
+                            <div class="count"><?=h($for_approval);?></div>
                             <span class="count_bottom">Last Access Date 
                                 <i class="green">
-                                    TODO
+                                    <?=h(date('Y-M-d H:i A'));?>
                                 </i><br/>
                             </span>
                         </div>
                         <div class="col-md-6 col-sm-6  tile_stats_count">
-                            <span class="count_top"><i class="fa fa-user"></i> Pending Release </span>
-                            <div class="count">TODO</div>
+                            <span class="count_top"><i class="fa fa-user"></i> Contract Generation </span>
+                            <div class="count"><?=h($for_contract);?></div>
                             <span class="count_bottom">Last Access Date 
                                 <i class="green">
-                                    TODO
+                                    <?=h(date('Y-M-d H:i A'));?>
                                 </i><br/>
                             </span>
                         </div>
@@ -89,8 +89,63 @@
                 </div>
             </div>
         </div>
+
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <div class="col-md-6 no-padding">
+            <div class="col-md-12 no-padding" style="margin-bottom:10px">
+                <div class="card">
+                    <div class="tile_count">
+                        <div class="col-md-6 col-sm-6  tile_stats_count">
+                            <span class="count_top"><i class="fa fa-user"></i> Pending Release </span>
+                            <div class="count"><?=h($for_release);?></div>
+                            <span class="count_bottom">Last Access Date 
+                                <i class="green">
+                                    <?=h(date('Y-M-d H:i A'));?>
+                                </i><br/>
+                            </span>
+                        </div>
+                        <div class="col-md-6 col-sm-6  tile_stats_count">
+                            <span class="count_top"><i class="fa fa-user"></i> Approved and Released</span>
+                            <div class="count"><?=h($approved_loans);?></div>
+                            <span class="count_bottom">Last Access Date 
+                                <i class="green">
+                                    <?=h(date('Y-M-d H:i A'));?>
+                                </i><br/>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 no-padding" style="margin-bottom:10px">
+                <div class="card">
+                    <div class="tile_count">
+                        <div class="col-md-6 col-sm-6  tile_stats_count">
+                            <span class="count_top"><i class="fa fa-user"></i> Rejected</span>
+                            <div class="count"><?=h($rejected_loans);?></div>
+                            <span class="count_bottom">Last Access Date 
+                                <i class="green">
+                                    <?=h(date('Y-M-d H:i A'));?>
+                                </i><br/>
+                            </span>
+                        </div>
+                        <div class="col-md-6 col-sm-6  tile_stats_count">
+                            <span class="count_top"><i class="fa fa-user"></i> Total Users </span>
+                            <div class="count"><?=h($total_users);?></div>
+                            <span class="count_bottom">Last Access Date 
+                                <i class="green">
+                                    <?=h(date('Y-M-d H:i A'));?>
+                                </i><br/>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row col-md-12">
+        <div class="col-lg-12 col-md-6 col-sm-12 col-xs-12">
+            <div class="col-md-4">
                 <div class="x_panel">
                     <div class="x_title">
                         <h2>Daily Weather Report</h2>
@@ -98,7 +153,7 @@
                     </div>
                     <div class="x_content">
                         <div class="col-md-12 no-padding">
-                            <div class="col-md-12 no-padding" style="height:414px;">
+                            <div class="col-md-12 no-padding" style="height:200px;">
                                 <h2><?=h($weather_data->name); ?> Weather Status</h2>
                                 <div class="time" >
                                     <div><b><?=h(date("l g:i A", $currentTime)); ?></b></div>
@@ -125,7 +180,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 no-padding">
+            <div class="col-md-4">
                 <div class="x_panel">
                     <div class="x_title">
                         <h2>Recent Login Activities</h2>
@@ -134,18 +189,50 @@
                     <div class="x_content" style="height:320px;overflow-y:auto;">
                         <div class="dashboard-widget-content">
                             <ul class="list-unstyled timeline widget">
-                                <li>
-                                    <div class="block">
-                                        <div class="block_content">
-                                        <h2 class="title">Logged In</h2>
-                                        <div class="byline">
-                                            <span>DATETIME</span> 
-                                            by <a>Arianne Santos</a>
+                                <?php foreach ($login_logs as $key => $value) { ?>
+                                    <li>
+                                        <div class="block">
+                                            <div class="block_content">
+                                            <h2 class="title"><?=h($value->message);?></h2>
+                                            <div class="byline">
+                                                <span>DATETIME</span> 
+                                                <span><?=h($value->created->format('Y-M-d H:i A'));?></span>
+                                                by <a><?=h(ucwords($value->username));?></a>
+                                            </div>
+                                            <p class="excerpt"></p>
+                                            </div>
                                         </div>
-                                        <p class="excerpt"></p>
+                                    </li>
+                                <?php } ?>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Recent Loan Activities</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content" style="height:320px;overflow-y:auto;">
+                        <div class="dashboard-widget-content">
+                            <ul class="list-unstyled timeline widget">
+                                <?php foreach ($loans_notif as $key => $value) { ?>
+                                    <li>
+                                        <div class="block">
+                                            <div class="block_content">
+                                            <h2 class="title"><?=h($value->message);?></h2>
+                                            <div class="byline">
+                                                <span>DATETIME</span> 
+                                                <span><?=h($value->created->format('Y-M-d H:i A'));?></span>
+                                                by <a><?=h(ucwords($value->username));?></a>
+                                            </div>
+                                            <p class="excerpt"></p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
+                                    </li>
+                                <?php } ?>
                             </ul>
                         </div>
                     </div>

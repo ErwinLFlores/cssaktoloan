@@ -21,7 +21,7 @@
             </div> -->
             <?php $user_data = $this->request->session()->read('Auth.User'); ?>
             <div class="profile_info" style="width:100%;text-align:center;padding:10px;">
-                WELCOME, <h2> <?=h(strtoupper($user_data->firstname));?></h2>
+                WELCOME, <h2><?=h(strtoupper($user_data->firstname));?></h2>
             </div>
         </div>
         <!-- /menu profile quick info -->

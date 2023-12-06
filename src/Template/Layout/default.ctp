@@ -35,12 +35,13 @@
     <div class="container body">
         <div class="main_container">
             <?php if (!empty($this->request->session()->read('Auth.User'))) { ?>
-                <?php if ($this->request->params['action'] != "prints") { ?>
+                <?php if ($this->request->session()->read('Auth.User')->role == "admin") { ?>
+                    <?php echo $this->element('sidebar_admin'); ?>
+                <?php } else { ?>
                     <?php echo $this->element('sidebar'); ?>
-                    <?php echo $this->element('top_bar'); ?>
-            <?php }else { ?>
-                <?php echo $this->element('sidebar_back'); ?>
-            <?php }} ?>
+                <?php } ?>
+                <?php echo $this->element('top_bar'); ?>
+            <?php } ?>
 
             <?php echo $this->element('content'); ?>
 

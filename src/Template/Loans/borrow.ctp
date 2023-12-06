@@ -55,47 +55,29 @@
                                             <td><?php echo number_format($result['loan_amount'], 2); ?></td>
                                             <td>
                                                 <?php 
-                                                    // 0 = for verification
-                                                    // 1 = for contract signing
-                                                    // 2 = for release
-                                                    // 3 = rejected
-                                                    // 4 = approved
-                                                    // 5 = done 
-
-                                                    switch ($result['status']) {
-                                                        case 0:
-                                                            echo "<h6><span class='badge badge-primary'>for verification</span></h6>";
-                                                            break;
-                                                        case 1:
-                                                            echo "<h6><span class='badge badge-warning'>for contract signing</span></h6>";
-                                                            break;
-                                                        case 2:
-                                                            echo "<h6><span class='badge badge-info'>for release</span></h6>";
-                                                            break;
-                                                        case 3:
-                                                            echo "<h6><span class='badge badge-danger'>Rejected</span></h6>";
-                                                            break;
-                                                        case 4:
-                                                            echo "<h6><span class='badge badge-success'>Approved</span></h6>";
-                                                            break;
-                                                        case 5:
-                                                            echo "<h6><span class='badge badge-secondary'>Done</span></h6>";
-                                                            break;
-                                                        // add more cases as needed
-                                                        default:
-                                                        echo "";
-                                                    }
-
+                                                    $statuses = [
+                                                        ['lightsteelblue', 'For Verification'],
+                                                        ['whitesmoke', 'For Contract Signing'],
+                                                        ['lightpink', 'For User Contract Agreement'],
+                                                        ['blue; color: white', 'For Release'],
+                                                        ['lightsalmon', 'Rejected'],
+                                                        ['lightgreen', 'Approved and Released'],
+                                                        ['grey; color: white', 'Done']
+                                                    ];
                                                 ?>
+                                                    <h6><span class='badge' style="background-color: <?=h($statuses[$result['status']][0]);?>;"> <?=h($statuses[$result['status']][1]);?></span></h6>
                                             </td>
                                                 
                                             <td><?php echo $result['created']; ?></td>
                                             <td>
                                                 <?php if ($result['status'] == 0) { ?>
-                                                    <a href="/loans/borrowUpdate/<?php echo $result['id']; ?>" class="btn btn-primary" >Update</a>
-                                                    <a href="/loans/borrowDelete/<?php echo $result['id']; ?>" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
+                                                    <a href="/loans/borrowUpdate/<?php echo $result['id']; ?>" class="btn btn-xs btn-success" >Update</a>
+                                                    <a href="/loans/borrowDelete/<?php echo $result['id']; ?>" class="btn btn-xs btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
                                                 <?php } else { ?>
-                                                    <a href="/loans/statementofaccount/<?php echo $result['id']; ?>" class="btn btn-secondary" >Statement of Account</a>
+                                                    <a href="/loans/statementofaccount/<?php echo $result['id']; ?>" class="btn btn-xs  btn-primary" >View SOA</a>
+                                                    <?php if ($result['status'] == 2) { ?>
+                                                        <a href="/loans/viewcontract/<?php echo $result['id']; ?>/agreement" style="color: black;" class="btn btn-xs btn-warning" >View Contract</a>
+                                                    <?php } ?>
                                                 <?php } ?>
                                             </td>
                                         </tr>
@@ -111,8 +93,6 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 </div>

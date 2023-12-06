@@ -9,8 +9,12 @@ use Cake\Validation\Validator;
 /**
  * Loans Model
  *
+ * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
+ * @property \App\Model\Table\ApprovalUsersTable&\Cake\ORM\Association\BelongsTo $ApprovalUsers
+ * @property \App\Model\Table\AdminApprovalUsersTable&\Cake\ORM\Association\BelongsTo $AdminApprovalUsers
+ *
  * @method \App\Model\Entity\Loan get($primaryKey, $options = [])
- * @method \App\Model\Entity\KeeLoanper newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Loan newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Loan[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\Loan|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Loan saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
@@ -37,6 +41,17 @@ class LoansTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+
+        $this->belongsTo('Users', [
+            'foreignKey' => 'user_id',
+            'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('ApprovalUsers', [
+            'foreignKey' => 'approval_user_id',
+        ]);
+        $this->belongsTo('AdminApprovalUsers', [
+            'foreignKey' => 'admin_approval_user_id',
+        ]);
     }
 
     /**
@@ -52,19 +67,35 @@ class LoansTable extends Table
             ->allowEmptyString('id', null, 'create');
 
         $validator
-            ->integer('user_id');
+            ->integer('terms_of_payment')
+            ->requirePresence('terms_of_payment', 'create')
+            ->notEmptyString('terms_of_payment');
 
         $validator
-            ->integer('terms_of_payment');
-        
+            ->scalar('loan_amount')
+            ->requirePresence('loan_amount', 'create')
+            ->notEmptyString('loan_amount');
+
         $validator
-            ->integer('loan_amount');
-        
+            ->integer('auto_debit')
+            ->allowEmptyString('auto_debit');
+
         $validator
-            ->integer('approval_user_id');
-        
+            ->scalar('interest_per_month')
+            ->allowEmptyString('interest_per_month');
+
         $validator
-            ->integer('auto_debit');
+            ->dateTime('user_contract_approval_date')
+            ->allowEmptyDateTime('user_contract_approval_date');
+
+        $validator
+            ->scalar('finance_auto_debit_status')
+            ->maxLength('finance_auto_debit_status', 100)
+            ->allowEmptyString('finance_auto_debit_status');
+
+        $validator
+            ->integer('status')
+            ->notEmptyString('status');
 
         return $validator;
     }
@@ -76,5 +107,10 @@ class LoansTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-   
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->existsIn(['user_id'], 'Users'));
+
+        return $rules;
+    }
 }
