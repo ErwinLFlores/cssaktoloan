@@ -118,7 +118,7 @@
 
                                     <div class="col-md-12 no-padding">
                                         <div class="col-md-5 col-xs-12 no-padding">MONTHLY SALARY</div>
-                                        <div class="col-md-7 col-xs-12 no-padding"><?=h($data->user->monthly_salary);?></div>
+                                        <div class="col-md-7 col-xs-12 no-padding"><?=h((!empty($data->user->monthly_salary)) ? $data->user->monthly_salary : 'TBA');?></div>
                                     </div>
 
                                     <div class="col-md-12 no-padding">
@@ -128,7 +128,7 @@
 
                                     <div class="col-md-12 no-padding">
                                         <div class="col-md-5 col-xs-12 no-padding">LOAN INTEREST</div>
-                                        <div class="col-md-7 col-xs-12 no-padding"><?=h($data->interest_per_annum);?></div>
+                                        <div class="col-md-7 col-xs-12 no-padding"><?=h((!empty($data->interest_per_month)) ? $data->interest_per_month : 3.5);?> %</div>
                                     </div>
 
                                     <div class="col-md-12 no-padding">

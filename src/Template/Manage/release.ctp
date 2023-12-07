@@ -74,7 +74,7 @@
                                             <td><?=h($loan->user->email);?></td>
                                             <td>PHP <?=h(sprintf("%.2f", $loan->loan_amount));?></td>
                                             <td><?=h($loan->terms_of_payment);?></td>
-                                            <td><?=h($loan->interest_per_month);?></td>
+                                            <td><?=h((!empty($loan->interest_per_month)) ? (!empty($loan->interest_per_month)) : 3.5);?> %</td>
                                             <td><?=h($loan->created->format('Y-M-d'));?></td>
                                             <td style="text-align:left;">
                                                 <?=$this->Html->link($this->Html->tag('i', '', ['class'=>'fa fa-eye']), 

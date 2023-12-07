@@ -151,7 +151,7 @@ class ManageController extends AppController
         $this->log_loan_approval_logs($data->user_id, $message);
         $this->Flash->success($message);
         
-        return $this->redirect(['controller' => 'manage', 'action' => 'loans']);
+        return $this->redirect(['controller' => 'manage', 'action' => 'contracts']);
     }
 
     private function borrowerdata($loan_data)
