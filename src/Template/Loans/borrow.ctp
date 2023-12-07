@@ -69,7 +69,7 @@
                                                     <h6><span class='badge' style="background-color: <?=h($statuses[$result['status']][0]);?>;"> <?=h($statuses[$result['status']][1]);?></span></h6>
                                             </td>
                                                 
-                                            <td><?php echo $result['created']; ?></td>
+                                            <td><?php echo $result['created']->format('y-M-d H:i A'); ?></td>
                                             <td>
                                                 <?php if ($result['status'] == 0) { ?>
                                                     <a href="/loans/borrowUpdate/<?php echo $result['id']; ?>" class="btn btn-xs btn-success" >Update</a>
