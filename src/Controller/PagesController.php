@@ -115,21 +115,21 @@ class PagesController extends AppController
                 'id' => $user_id
             ]
         )->first();
-
-        $login_logs = $this->LoginLogs->find('all')->where(
-            [
-                'username' => $username
-            ]
+        
+        $this->loadModel('LoanApprovalLogs');
+        $approval_logs = $this->LoanApprovalLogs->find('all')->where(
+            ['user_id' => $this->Auth->user('id')]
         )
         ->order(['id' => 'DESC'])
         ->limit(5)
         ->all();
 
+
         $this->set(compact([
             'logged_name', 
             'total_loan', 
             'user',
-            'login_logs'
+            'approval_logs'
         ]));
     }
 
@@ -225,6 +225,13 @@ class PagesController extends AppController
             ])
             ->first();
         $this->set('total_users', intval($total_users->total));
+        
+        $this->loadModel('LoanApprovalLogs');
+            $approval_logs = $this->LoanApprovalLogs->find('all')
+                ->order(['id' => 'DESC'])
+                ->limit(5)
+                ->all();
+        $this->set('approval_logs', $approval_logs);
 
         // $this->loadModel('CoopStats');
         // $active_interest = $this->CoopStats->find('all')

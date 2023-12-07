@@ -166,8 +166,8 @@
                                 <div class="col-md-12" style="text-align:center;">
                                     <img src="/images/samplesigns/esign2.png" style="max-width: 200px;" alt="">
                                     <div>
-                                        <span style="font-size: 16px;"> <?=h($data->user->firstname);?> <?=h($data->user->lastname);?></span> </br>
-                                        <span style="font-size: 12px;"> <b>Borrower</b></span> </br>
+                                        <span style="font-size: 16px;"> Vladimir Ventura</span> </br>
+                                        <span style="font-size: 12px;"> <b>APPROVED BY</b></span> </br>
                                     </div>
                                 </div>
                             </div>
@@ -176,10 +176,24 @@
                                     <img src="/images/samplesigns/esign2.png" style="max-width: 200px;" alt="">
                                     <div>
                                         <span style="font-size: 16px;"> <?=h($user_data->firstname);?> <?=h($user_data->lastname);?></span> </br>
-                                        <span style="font-size: 12px;"> <b>Approving Admin</b></span> </br>
+                                        <span style="font-size: 12px;"> <b>AUTHORIZED BY</b></span> </br>
                                     </div>
                                 </div>
                             </div>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <div class="col-md-12">
+                                <div class="col-md-12" style="text-align:center;">
+                                    <span>ACKNOWLEDGED</span><br/>
+                                    <img src="/images/samplesigns/esign2.png" style="max-width: 200px;" alt="">
+                                    <div>
+                                        <span style="font-size: 16px;"> <?=h($data->user->firstname);?> <?=h($data->user->lastname);?></span> </br>
+                                        <span style="font-size: 12px;"> <b> BORROWER </b></span> </br>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr/>
                         </div>
                         <hr/>
                         <style>
@@ -206,7 +220,7 @@
                 <br/>
                 <div class="col-md-12 card-footer">
                     <div class="col-md-6" style="text-align:left;">
-                        <a href="/loans/borrowDelete/<?php echo $data->id; ?>" class="btn btn-xs btn-danger" onclick="return confirm('Are you sure to delete request? ')">Delete Loan</a>
+                        <a href="/loans/cancelloan/<?php echo $data->id; ?>/cancel" class="btn btn-xs btn-danger" onclick="return confirm('Are you sure to cancel your request? ')">Cancel Loan</a>
                     </div>
                     <div class="col-md-6" style="text-align:right;">
                         <?= $this->Form->create('Add Category', ['type' => 'post', 'url' => '/loans/agreecontract/' . $data->id . '/agreement']); ?>

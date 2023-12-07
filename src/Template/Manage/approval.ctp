@@ -53,7 +53,7 @@
                                 <?php 
                                     $statuses = [
                                         ['lightsteelblue', 'For Verification'],
-                                        ['whitesmoke', 'For Contract Signing'],
+                                        ['antiquewhite', 'For Contract Signing'],
                                         ['blue; color: white', 'For Release'],
                                         ['lightsalmon', 'Rejected'],
                                         ['lightgreen', 'Approved'],

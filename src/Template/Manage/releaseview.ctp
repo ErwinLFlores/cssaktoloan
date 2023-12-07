@@ -166,8 +166,8 @@
                                 <div class="col-md-12" style="text-align:center;">
                                     <img src="/images/samplesigns/esign2.png" style="max-width: 200px;" alt="">
                                     <div>
-                                        <span style="font-size: 16px;"> <?=h($data->user->firstname);?> <?=h($data->user->lastname);?></span> </br>
-                                        <span style="font-size: 12px;"> <b>Borrower</b></span> </br>
+                                        <span style="font-size: 16px;"> Vladimir Ventura</span> </br>
+                                        <span style="font-size: 12px;"> <b>APPROVED BY</b></span> </br>
                                     </div>
                                 </div>
                             </div>
@@ -176,10 +176,24 @@
                                     <img src="/images/samplesigns/esign2.png" style="max-width: 200px;" alt="">
                                     <div>
                                         <span style="font-size: 16px;"> <?=h($user_data->firstname);?> <?=h($user_data->lastname);?></span> </br>
-                                        <span style="font-size: 12px;"> <b>Approved By: </b></span> </br>
+                                        <span style="font-size: 12px;"> <b>AUTHORIZED BY</b></span> </br>
                                     </div>
                                 </div>
                             </div>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <div class="col-md-12">
+                                <div class="col-md-12" style="text-align:center;">
+                                    <span>ACKNOWLEDGED</span><br/>
+                                    <img src="/images/samplesigns/esign2.png" style="max-width: 200px;" alt="">
+                                    <div>
+                                        <span style="font-size: 16px;"> <?=h($data->user->firstname);?> <?=h($data->user->lastname);?></span> </br>
+                                        <span style="font-size: 12px;"> <b> BORROWER </b></span> </br>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr/>
                         </div>
                         <hr/>
                         <style>

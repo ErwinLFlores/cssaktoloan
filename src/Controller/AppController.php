@@ -78,13 +78,13 @@ class AppController extends Controller
     {
         $statuses = [
             ['grey' => 'For Verification'],
-            ['whitesmoke' => 'For Contract Signing'],
+            ['antiquewhite' => 'For Contract Signing'],
             ['lightpink' => 'For User Contract Agreement'],
             ['lightblue' => 'For Release'],
             ['red' => 'Rejected'],
             ['green' => 'Approved and Released'],
             ['grey' => 'Done'],
-            ['lightorange' => 'Cancel']
+            ['orange' => 'Cancelled']
         ];
 
         return $statuses[$status];
@@ -192,13 +192,13 @@ class AppController extends Controller
 
     public function log_loan_approval_logs($user_id, $message)
     {
-        $this->loadModel('LoginLogs');
-        $login_logs = $this->LoginLogs->newEntity([
+        $this->loadModel('LoanApprovalLogs');
+        $login_logs = $this->LoanApprovalLogs->newEntity([
             'user_id' => $user_id,
             'message' => $message,
             'action_provider' => $this->Auth->user('email')
         ]);
-        $result = $this->LoginLogs->save($login_logs);
+        $result = $this->LoanApprovalLogs->save($login_logs);
         
         return $result;
     }

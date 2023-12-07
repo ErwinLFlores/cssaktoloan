@@ -132,7 +132,7 @@ class ManageController extends AppController
         $this->log_loan_approval_logs($data->user_id, $message);
         $this->Flash->error($message);
         
-        return $this->redirect(['controller' => 'manage', 'action' => 'loans']);
+        return $this->redirect(['controller' => 'manage', 'action' => 'contracts']);
     }
 
     public function verifyloan($loan_id, $process)
@@ -165,7 +165,8 @@ class ManageController extends AppController
 
 
         $data .= "And the Person B is the Loan Guarantor which is the borrower's current company, ";
-        $data .= "Person C is the approving Admin, ";
+        $data .= "Person C is the Authorization Admin, ";
+        $data .= "Person E is the validator and approving admin, ";
         $data .= "Person D is the lending coop, ";
         $data .= "Please also add unable to pay will automatically be deducted on the backpay and any other form of the employees last money to received from the company, ";
         $data .= "and Please Add Privacy Data and All rights to the lender reserved, ";
@@ -229,20 +230,28 @@ class ManageController extends AppController
             return $this->redirect(['controller' => 'manage', 'action' => 'contracts']);
         } else {
             try {
-                $contract_data = $this->ChatGpt->create($this->borrowerdata($data));
-                $contract_sample = json_decode($contract_data);
-                $contract = $contract_sample->choices[0]->message->content;
+                
+
+                if (
+                    (isset($contract_sample->choices[0]->message->content))
+                    && (!empty($contract_sample->choices[0]->message->content))
+                ) {
+                    $contract_data = $this->ChatGpt->create($this->borrowerdata($data));
+                    $contract_sample = json_decode($contract_data);
+                    $contract = $contract_sample->choices[0]->message->content;
+                } else {
+                    $this->loadModel('Contracts');
+                    $contract = $this->Contracts->find('all')
+                        ->where([
+                            'loan_id' => 21,
+                            'status' => 'active'
+                        ])
+                        ->first();
+                    $contract = $contract->message;
+                }
             } catch (\Throwable $th) {
-                $this->loadModel('Contracts');
-                $contract = $this->Contracts->find('all')
-                    ->where([
-                        'loan_id' => 21,
-                        'status' => 'active'
-                    ])
-                    ->first();
-                $contract = $contract->message;
+
             }
-            
         }
 
         $this->set(compact('data'));
@@ -369,7 +378,7 @@ class ManageController extends AppController
 
     public function view($loan_id)
     {
-        $this->set('page_title', 'For Loan Release');
+        $this->set('page_title', 'For Loan View');
         $data = $this->Loans->find('all')
             ->where([
                 'Loans.id' => $loan_id

@@ -53,13 +53,13 @@
                                 <?php 
                                     $statuses = [
                                         ['lightsteelblue', 'For Verification'],
-                                        ['whitesmoke', 'For Contract Signing'],
+                                        ['antiquewhite', 'For Contract Signing'],
                                         ['lightpink', 'For User Contract Agreement'],
                                         ['blue; color: white', 'For Release'],
                                         ['lightsalmon', 'Rejected'],
                                         ['lightgreen', 'Approved and Released'],
                                         ['grey; color: white', 'Done'],
-                                        ['lightorange' => 'Cancel']
+                                        ['orange', 'Cancelled']
                                     ];
                                 ?>
                                 <?php if (count($loans) > 0): ?>

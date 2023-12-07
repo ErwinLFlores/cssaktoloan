@@ -57,13 +57,13 @@
                                                 <?php 
                                                     $statuses = [
                                                         ['lightsteelblue', 'For Verification'],
-                                                        ['whitesmoke', 'For Contract Signing'],
+                                                        ['antiquewhite', 'For Contract Signing'],
                                                         ['lightpink', 'For User Contract Agreement'],
                                                         ['blue; color: white', 'For Release'],
                                                         ['lightsalmon', 'Rejected'],
                                                         ['lightgreen', 'Approved and Released'],
                                                         ['grey; color: white', 'Done'],
-                                                        ['lightorange' => 'Cancel']
+                                                        ['orange', 'Cancelled']
                                                     ];
                                                 ?>
                                                     <h6><span class='badge' style="background-color: <?=h($statuses[$result['status']][0]);?>;"> <?=h($statuses[$result['status']][1]);?></span></h6>

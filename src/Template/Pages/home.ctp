@@ -48,61 +48,8 @@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <?= $this->Flash->render(); ?>
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <div class="col-md-12 no-padding" style="margin-bottom:10px">
-                <div class="card">
-                    <div class="tile_count">
-                        <div class="col-md-6 col-sm-6  tile_stats_count">
-                            <span class="count_top"><i class="fa fa-user"></i> Total Contributions</span>
-                            <div class="count">
-                                <?php echo number_format($user['total_contribution_amount'], 2); ?>
-                            </div>
-                            <span class="count_bottom">Last Access Date 
-                                <i class="green">
-                                    TO DO
-                                </i><br/>
-                            </span>
-                        </div>
-                        <div class="col-md-6 col-sm-6  tile_stats_count">
-                            <span class="count_top"><i class="fa fa-user"></i> Total Loans</span>
-                            <div class="count">
-                                <?php echo isset($total_loan) ? $total_loan : 0; ?>
-                            </div>
-                            <span class="count_bottom">Last Access Date 
-                                <i class="green">
-                                    TO DO
-                                </i><br/>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-12 no-padding" style="margin-bottom:10px">
-                <div class="card">
-                    <div class="tile_count">
-                        <div class="col-md-6 col-sm-6  tile_stats_count">
-                            <span class="count_top"><i class="fa fa-user"></i> Monthly Contribution Amount </span>
-                            <div class="count"><?php echo number_format($user['monthly_contribution_amount'], 2); ?></div>
-                            <span class="count_bottom">Last Access Date 
-                                <i class="green">
-                                    TO DO
-                                </i><br/>
-                            </span>
-                        </div>
-                        <div class="col-md-6 col-sm-6  tile_stats_count">
-                            <span class="count_top"><i class="fa fa-user"></i> Withdraw Amount </span>
-                            <div class="count">0.00</div>
-                            <span class="count_bottom">Last Access Date 
-                                <i class="green">
-                                    TO DO
-                                </i><br/>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+
+        <div class="col-lg-12 col-md-6 col-sm-12 col-xs-12">
             <div class="col-md-6 no-padding">
                 <div class="x_panel">
                     <div class="x_title">
@@ -111,7 +58,7 @@
                     </div>
                     <div class="x_content">
                         <div class="col-md-12 no-padding">
-                            <div class="col-md-12 no-padding" style="height:414px;">
+                            <div class="col-md-12 no-padding" style="height:220px;">
                                 <h2><?=h($weather_data->name); ?> Weather Status</h2>
                                 <div class="time" >
                                     <div><b><?=h(date("l g:i A", $currentTime)); ?></b></div>
@@ -120,7 +67,7 @@
                                 <div class="row">
                                     <div class="col-sm-4">
                                         <div class="weather-icon">
-                                            <img style="height:130px;width:230px;"
+                                            <img style="height:200px;width:400px;"
                                                 src="http://openweathermap.org/img/w/<?php echo $weather_data->weather[0]->icon; ?>.png"
                                                 class="weather-icon" />
                                         </div>
@@ -140,26 +87,102 @@
             </div>
             <div class="col-md-6 no-padding">
                 <div class="x_panel">
+                    <div class="x_content">
+                        <div class="col-md-12 no-padding">
+                            <div class="col-md-12 no-padding" style="height:272px;text-align:center;">
+                                <br/>
+                                <br/>
+                                <h1><?=h(date('F'));?></h1>
+                                <span style="font-size: 55px;"><?=h(date('d'));?></span><br/>
+                                <h1> <?=h(date('Y'));?></h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-md-12 no-padding" style="margin-bottom:10px">
+                    <div class="card">
+                        <div class="tile_count">
+                            <div class="col-md-6 col-sm-6  tile_stats_count">
+                                <span class="count_top"><i class="fa fa-user"></i> Total Contributions</span>
+                                <div class="count">
+                                    <?php echo number_format($user['total_contribution_amount'], 2); ?>
+                                </div>
+                                <span class="count_bottom">Last Access Date 
+                                    <i class="green">
+                                        <?=h(date('Y-M-d H:i A'));?>
+                                    </i><br/>
+                                </span>
+                            </div>
+                            
+                            <div class="col-md-6 col-sm-6  tile_stats_count">
+                                <span class="count_top"><i class="fa fa-user"></i> Total Loans</span>
+                                <div class="count">
+                                    <?php echo isset($total_loan) ? $total_loan : 0; ?>
+                                </div>
+                                <span class="count_bottom">Last Access Date 
+                                    <i class="green">
+                                        <?=h(date('Y-M-d H:i A'));?>
+                                    </i><br/>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 no-padding" style="margin-bottom:10px">
+                    <div class="card">
+                        <div class="tile_count">
+                            <div class="col-md-6 col-sm-6  tile_stats_count">
+                                <span class="count_top"><i class="fa fa-user"></i> Monthly Contribution Amount </span>
+                                <div class="count"><?php echo number_format($user['monthly_contribution_amount'], 2); ?></div>
+                                <span class="count_bottom">Last Access Date 
+                                    <i class="green">
+                                        <?=h(date('Y-M-d H:i A'));?>
+                                    </i><br/>
+                                </span>
+                            </div>
+                            <div class="col-md-6 col-sm-6  tile_stats_count">
+                                <span class="count_top"><i class="fa fa-user"></i> Withdraw Amount </span>
+                                <div class="count">0.00</div>
+                                <span class="count_bottom">Last Access Date 
+                                    <i class="green">
+                                        <?=h(date('Y-M-d H:i A'));?>
+                                    </i><br/>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
                     <div class="x_title">
-                        <h2>Recent Login Activities</h2>
+                        <h2>Loan Status Logs</h2>
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content" style="height:320px;overflow-y:auto;">
                         <div class="dashboard-widget-content">
-                        <?php foreach ($login_logs as $key => $value) { ?>
-                                <li>
-                                    <div class="block">
-                                        <div class="block_content">
-                                        <h2 class="title"><?=h($value->message);?></h2>
-                                        <div class="byline">
-                                            <span><?=h($value->created->format('Y-M-d H:i A'));?></span>
-                                            by <a><?=h(ucwords($value->username));?></a>
+                            <ul class="list-unstyled timeline widget">
+                                <?php foreach ($approval_logs as $key => $value) { ?>
+                                    <li>
+                                        <div class="block">
+                                            <div class="block_content">
+                                            <h2 class="title"><?=h($value->message);?></h2>
+                                            <div class="byline">
+                                                <span><?=h($value->created->format('Y-M-d H:i A'));?></span>
+                                                by <a><?=h(ucwords($value->action_provider));?></a>
+                                            </div>
+                                            <p class="excerpt"></p>
+                                            </div>
                                         </div>
-                                        <p class="excerpt"></p>
-                                        </div>
-                                    </div>
-                                </li>
-                            <?php } ?>
+                                    </li>
+                                <?php } ?>
+                            </ul>
                         </div>
                     </div>
                 </div>

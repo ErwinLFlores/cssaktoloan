@@ -74,6 +74,20 @@ class LoansController extends AppController
         $this->set(compact('contract'));
     }
 
+    public function cancelloan($loan_id, $process)
+    {
+        $data = $this->Loans->find('all')
+            ->where(['id' => $loan_id])
+            ->first();
+        $data = $this->Loans->patchEntity($data, ['status' => 7]);
+        $data = $this->Loans->save($data);
+        $message = 'You have cancelled your Loan #' . $data->id . ' request sucessfully.';
+        $this->log_loan_approval_logs($data->user_id, $message);
+        $this->Flash->error($message);
+        
+        return $this->redirect(['controller' => 'loans', 'action' => 'borrow']);
+    }
+
     public function agreecontract($loan_id, $process)
     {
         $current_index = $this->oneWordStatusIndex($process);
