@@ -111,7 +111,7 @@ class ManageController extends AppController
 
         if (empty($data)) {
             $this->Flash->formerror(__('Data not Found.'));
-            return $this->redirect(['controller' => 'manage', 'action' => 'loans']);
+            return $this->redirect(['controller' => 'manage', 'action' => 'approval']);
         } 
         $this->set(compact('data'));
     }
@@ -160,7 +160,7 @@ class ManageController extends AppController
         $data .= "the Borrower ";
         $data .= "Loan Amount: PHP $loan_data->loan_amount, ";
         $data .= "Terms of Payment: $loan_data->terms_of_payment Months, ";
-        $data .= "Interest: $loan_data->interest_per_annum % per Annum, ";
+        $data .= "Interest: 3.5% per Annum, ";
         $data .= "Mode of Payment: Auto Debit on Payroll (Monthly)";
 
 
@@ -180,7 +180,7 @@ class ManageController extends AppController
 
     public function contracts($member_search = null)
     {
-        $this->set('page_title', 'Loans List');
+        $this->set('page_title', 'For Contract Generation');
         $isPaginated = true;
         $searched_data = $this->request->getQuery('search');
         $searched_conditions = "Loans.status = 1 ";
@@ -226,11 +226,23 @@ class ManageController extends AppController
 
         if (empty($data)) {
             $this->Flash->formerror(__('Data not Found.'));
-            return $this->redirect(['controller' => 'manage', 'action' => 'loans']);
+            return $this->redirect(['controller' => 'manage', 'action' => 'contracts']);
         } else {
-            $contract_data = $this->ChatGpt->create($this->borrowerdata($data));
-            $contract_sample = json_decode($contract_data);
-            $contract = $contract_sample->choices[0]->message->content;
+            try {
+                $contract_data = $this->ChatGpt->create($this->borrowerdata($data));
+                $contract_sample = json_decode($contract_data);
+                $contract = $contract_sample->choices[0]->message->content;
+            } catch (\Throwable $th) {
+                $this->loadModel('Contracts');
+                $contract = $this->Contracts->find('all')
+                    ->where([
+                        'loan_id' => 21,
+                        'status' => 'active'
+                    ])
+                    ->first();
+                $contract = $contract->message;
+            }
+            
         }
 
         $this->set(compact('data'));
@@ -275,7 +287,7 @@ class ManageController extends AppController
 
     public function release($member_search = null)
     {
-        $this->set('page_title', 'Loans List');
+        $this->set('page_title', 'For Release');
         $isPaginated = true;
         $searched_data = $this->request->getQuery('search');
         $searched_conditions = "Loans.status = 3 ";

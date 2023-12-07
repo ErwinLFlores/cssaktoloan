@@ -63,21 +63,5 @@ class MembersController extends AppController
         $this->set(compact('searched_data'));
         $this->set(compact('isPaginated'));
     }
-
-    /**
-     * View method
-     *
-     * @param string|null $id Contribution id.
-     * @return \Cake\Http\Response|null
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
-    {
-        $contribution = $this->Contributions->get($id, [
-            'contain' => [],
-        ]);
-
-        $this->set('contribution', $contribution);
-    }
 }
 

@@ -77,6 +77,15 @@
                             </span>
                         </div>
                         <div class="col-md-6 col-sm-6  tile_stats_count">
+                            <span class="count_top"><i class="fa fa-user"></i> Pending Release </span>
+                            <div class="count"><?=h($for_release);?></div>
+                            <span class="count_bottom">Last Access Date 
+                                <i class="green">
+                                    <?=h(date('Y-M-d H:i A'));?>
+                                </i><br/>
+                            </span>
+                        </div>
+                        <!-- <div class="col-md-6 col-sm-6  tile_stats_count">
                             <span class="count_top"><i class="fa fa-user"></i> Contract Generation </span>
                             <div class="count"><?=h($for_contract);?></div>
                             <span class="count_bottom">Last Access Date 
@@ -84,7 +93,7 @@
                                     <?=h(date('Y-M-d H:i A'));?>
                                 </i><br/>
                             </span>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -95,8 +104,8 @@
                 <div class="card">
                     <div class="tile_count">
                         <div class="col-md-6 col-sm-6  tile_stats_count">
-                            <span class="count_top"><i class="fa fa-user"></i> Pending Release </span>
-                            <div class="count"><?=h($for_release);?></div>
+                            <span class="count_top"><i class="fa fa-user"></i> Total Users </span>
+                            <div class="count"><?=h($total_users);?></div>
                             <span class="count_bottom">Last Access Date 
                                 <i class="green">
                                     <?=h(date('Y-M-d H:i A'));?>
@@ -119,7 +128,7 @@
             <div class="col-md-12 no-padding" style="margin-bottom:10px">
                 <div class="card">
                     <div class="tile_count">
-                        <div class="col-md-6 col-sm-6  tile_stats_count">
+                        <!-- <div class="col-md-6 col-sm-6  tile_stats_count">
                             <span class="count_top"><i class="fa fa-user"></i> Rejected</span>
                             <div class="count"><?=h($rejected_loans);?></div>
                             <span class="count_bottom">Last Access Date 
@@ -127,10 +136,19 @@
                                     <?=h(date('Y-M-d H:i A'));?>
                                 </i><br/>
                             </span>
+                        </div> -->
+                        <div class="col-md-6 col-sm-6  tile_stats_count">
+                            <span class="count_top"><i class="fa fa-user"></i> Max Loan per Contribution Percentage</span>
+                            <div class="count"><?=h($max_load_percent);?> %</div>
+                            <span class="count_bottom">Last Access Date 
+                                <i class="green">
+                                    <?=h(date('Y-M-d H:i A'));?>
+                                </i><br/>
+                            </span>
                         </div>
                         <div class="col-md-6 col-sm-6  tile_stats_count">
-                            <span class="count_top"><i class="fa fa-user"></i> Total Users </span>
-                            <div class="count"><?=h($total_users);?></div>
+                            <span class="count_top"><i class="fa fa-user"></i> Active Loan Interest</span>
+                            <div class="count"><?=h($active_interest);?> %</div>
                             <span class="count_bottom">Last Access Date 
                                 <i class="green">
                                     <?=h(date('Y-M-d H:i A'));?>
@@ -195,7 +213,6 @@
                                             <div class="block_content">
                                             <h2 class="title"><?=h($value->message);?></h2>
                                             <div class="byline">
-                                                <span>DATETIME</span> 
                                                 <span><?=h($value->created->format('Y-M-d H:i A'));?></span>
                                                 by <a><?=h(ucwords($value->username));?></a>
                                             </div>
@@ -224,7 +241,6 @@
                                             <div class="block_content">
                                             <h2 class="title"><?=h($value->message);?></h2>
                                             <div class="byline">
-                                                <span>DATETIME</span> 
                                                 <span><?=h($value->created->format('Y-M-d H:i A'));?></span>
                                                 by <a><?=h(ucwords($value->username));?></a>
                                             </div>

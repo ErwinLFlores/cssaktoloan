@@ -40,12 +40,11 @@
                             <thead>
                                 <tr>
                                     <th style="width:10%;">Status</th>
-                                    <th style="width:17%;">Name</th>
-                                    <th style="width:17%;">Email</th>
+                                    <th style="width:20%;">Name</th>
+                                    <th style="width:20%;">Email</th>
                                     <th style="width:15%;">Total Contributions</th>
                                     <th style="width:15%;">Contributions Count</th>
-                                    <th style="width:16%;">Since</th>
-                                    <th style="width:10%;">Actions</th>
+                                    <th style="width:20%;">Since</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -58,10 +57,6 @@
                                             <td>PHP <?=h(sprintf("%.2f", $member->total_contribution_amount));?></td>
                                             <td><?=h($member->total_contribution_count);?></td>
                                             <td><?=h($member->created->format('Y-M-d'));?></td>
-                                            <td style="text-align:left;">
-                                                <?=$this->Html->link($this->Html->tag('i', '', ['class'=>'fa fa-eye']), 
-                                                    ['action' => 'view', $member->id], ['class' => '', 'style' => 'color:orange;', 'escape' => false]); ?> &nbsp;
-                                            </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php else: ?>

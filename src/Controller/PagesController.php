@@ -225,6 +225,23 @@ class PagesController extends AppController
             ])
             ->first();
         $this->set('total_users', intval($total_users->total));
+
+        // $this->loadModel('CoopStats');
+        // $active_interest = $this->CoopStats->find('all')
+        //     ->where([
+        //         "status" => 'active',
+        //         "action" => "interest_rate"
+        //     ])
+        //     ->first();
+        $this->set('active_interest', 3.5);
+
+        // $max_load_percent = $this->CoopStats->find('all')
+        //     ->where([
+        //         "status" => 'active',
+        //         "action" => "max_loan_percentage"
+        //     ])
+        //     ->first();
+        $this->set('max_load_percent', 50);
         
     }
 }

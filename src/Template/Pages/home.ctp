@@ -147,20 +147,19 @@
                     <div class="x_content" style="height:320px;overflow-y:auto;">
                         <div class="dashboard-widget-content">
                         <?php foreach ($login_logs as $key => $value) { ?>
-                                    <li>
-                                        <div class="block">
-                                            <div class="block_content">
-                                            <h2 class="title"><?=h($value->message);?></h2>
-                                            <div class="byline">
-                                                <span>DATETIME</span> 
-                                                <span><?=h($value->created->format('Y-M-d H:i A'));?></span>
-                                                by <a><?=h(ucwords($value->username));?></a>
-                                            </div>
-                                            <p class="excerpt"></p>
-                                            </div>
+                                <li>
+                                    <div class="block">
+                                        <div class="block_content">
+                                        <h2 class="title"><?=h($value->message);?></h2>
+                                        <div class="byline">
+                                            <span><?=h($value->created->format('Y-M-d H:i A'));?></span>
+                                            by <a><?=h(ucwords($value->username));?></a>
                                         </div>
-                                    </li>
-                                <?php } ?>
+                                        <p class="excerpt"></p>
+                                        </div>
+                                    </div>
+                                </li>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
