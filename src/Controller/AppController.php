@@ -208,7 +208,7 @@ class AppController extends Controller
         $this->loadModel('Loans');
 
         $user_id = $this->Auth->user('id');
-        $status = [4,6,7];
+        $status = [4, 5, 6, 7];
         $loan = $this->Loans->find('all')->where(
             [
                 'user_id' => $user_id,
