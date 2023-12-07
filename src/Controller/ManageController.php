@@ -123,7 +123,7 @@ class ManageController extends AppController
         $data = $this->Loans->find('all')
             ->where([
                 'id' => $loan_id,
-                'status !=' => 3
+                'status !=' => 4
             ])
             ->first();
         $data = $this->Loans->patchEntity($data, ['status' => 4]);
@@ -237,7 +237,6 @@ class ManageController extends AppController
                     (isset($contract_sample->choices[0]->message->content))
                     && (!empty($contract_sample->choices[0]->message->content))
                 ) {
-        
                     $contract = $contract_sample->choices[0]->message->content;
                 } else {
                     $this->loadModel('Contracts');
@@ -245,6 +244,7 @@ class ManageController extends AppController
                         ->where([
                             'status' => 'active'
                         ])
+                        ->order('rand()')       
                         ->first();
                     $contract = $contract->message;
                 }
