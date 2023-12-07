@@ -16,7 +16,7 @@ class ChatGptComponent extends Component
     {
 
         try {
-            $open_ai = new OpenAi('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');
+            $open_ai = new OpenAi(env('OPEN_AI_TOKEN'));
             $chat = $open_ai->chat([
                 "model" => "gpt-3.5-turbo",
                 "messages" => [
