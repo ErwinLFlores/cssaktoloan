@@ -41,7 +41,7 @@
                         <br />
 
                         <div>
-                            <h1 style="color:white;"><i class="fa fa-sitemap"></i> CSC Sakto Loan</h1>
+                            <h1 style="color:white;"><i class="fa fa-sitemap"></i> CS COMMUNAL</h1>
                             <p style="font-size:10px;">©2023 All Rights Reserved. YEHA | Mobile Suit | Version 1.0</p>
                         </div>
                     </div>

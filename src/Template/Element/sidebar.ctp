@@ -7,7 +7,7 @@
 <div class="col-md-3 left_col">
     <div class="left_col scroll-view">
         <div class="navbar nav_title" style="border: 0;">
-            <a href="#" class="site_title"><i class="fa fa-sitemap"></i> <small>CSC Sakto Loan</small></a>
+            <a href="#" class="site_title"><i class="fa fa-sitemap"></i> <small>CS COMMUNAL</small></a>
         </div>
 
         <div class="clearfix"></div>
@@ -42,7 +42,12 @@
                         <a><i class="fa fa-home"></i> Loans <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <!-- <li><a href="/loans">Manage</a></li> -->
-                                <?php if ($availableBorrowRequest == 0) { ?>
+                                <?php 
+                                    if (
+                                        $availableBorrowRequest == 0 &&
+                                        $availableBorrowByContribution >= 4
+                                    ) 
+                                { ?>
                                     <li><a href="/loans/borrowAdd">Request </a></li>
                                 <?php } ?>
                             <li><a href="/loans/borrow">Borrow</a></li>

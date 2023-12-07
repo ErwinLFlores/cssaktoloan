@@ -1,5 +1,5 @@
 <?php
-    $cakeDescription = 'CSC Sakto Loan';
+    $cakeDescription = 'CS COMMUNAL';
 ?>
 <!DOCTYPE html>
 <html>

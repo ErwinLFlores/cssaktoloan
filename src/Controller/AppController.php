@@ -65,7 +65,8 @@ class AppController extends Controller
 
 
         $availableBorrowRequest = $this->availableBorrowRequest();
-        $this->set('availableBorrowRequest', $availableBorrowRequest);
+        $availableBorrowByContribution = $this->availableBorrowByContribution();
+        $this->set(compact('availableBorrowRequest', 'availableBorrowByContribution'));
     }
 
     public function beforeRender(Event $event)
@@ -207,7 +208,7 @@ class AppController extends Controller
         $this->loadModel('Loans');
 
         $user_id = $this->Auth->user('id');
-        $status = [3,5];
+        $status = [4,6,7];
         $loan = $this->Loans->find('all')->where(
             [
                 'user_id' => $user_id,
@@ -217,6 +218,22 @@ class AppController extends Controller
 
 
         return count($loan);
+    }
+
+    public function availableBorrowByContribution()
+    {
+        $this->loadModel('Contributions');
+
+        $user_id = $this->Auth->user('id');
+
+        $contribution = $this->Contributions->find('all')->where(
+            [
+                'user_id' => $user_id
+            ]
+        )->all();
+
+
+        return count($contribution);
     }
 
 }
