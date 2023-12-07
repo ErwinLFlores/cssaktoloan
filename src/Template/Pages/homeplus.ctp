@@ -18,23 +18,25 @@
     $currentTime = time();
 ?>
 <div class="container-fluid">
-    <div class="col-md-12" style="padding: 5px;">
-        <div class="card">
-            <div class="tile_count">
-                <?php 
-                    foreach ($disk as $key => $value) { 
-                        if ($key === 'free_disk_converted') {
-                            continue;
-                        } else {
-                ?>
-                    <div class="col-md-3 col-sm-12 tile_stats_count">
-                        <span class="count_top"><i class="fa fa-floppy-disk"></i> <?=h(ucwords(str_replace('_', ' ', $key)));?></span>
-                        <div class="count"><?=h($value);?></div>
-                    </div>
-                <?php }} ?>
+    <?php if (false) { ?>   
+        <div class="col-md-12" style="padding: 5px;">
+            <div class="card">
+                <div class="tile_count">
+                    <?php 
+                        foreach ($disk as $key => $value) { 
+                            if ($key === 'free_disk_converted') {
+                                continue;
+                            } else {
+                    ?>
+                        <div class="col-md-3 col-sm-12 tile_stats_count">
+                            <span class="count_top"><i class="fa fa-floppy-disk"></i> <?=h(ucwords(str_replace('_', ' ', $key)));?></span>
+                            <div class="count"><?=h($value);?></div>
+                        </div>
+                    <?php }} ?>
+                </div>
             </div>
         </div>
-    </div>
+    <?php } ?>
 
     <div class="col-lg-12 col-md-6 col-sm-12 col-xs-12">
         <div class="col-md-6 no-padding">
