@@ -125,6 +125,19 @@ class PagesController extends AppController
         ->all();
 
 
+        $total_release = $this->Loans->find('all');
+        $total_release = $total_release
+            ->select([
+                'total' => $total_release->func()->sum('loan_amount')
+            ])
+            ->where([
+                "status" => 5,
+                "user_id" => $user_id
+            ])
+            ->first();
+        $this->set('total_release', intval($total_release->total));
+
+
         $this->set(compact([
             'logged_name', 
             'total_loan', 

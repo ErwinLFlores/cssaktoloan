@@ -146,8 +146,8 @@
                                 </span>
                             </div>
                             <div class="col-md-6 col-sm-6  tile_stats_count">
-                                <span class="count_top"><i class="fa fa-user"></i> Withdraw Amount </span>
-                                <div class="count">0.00</div>
+                                <span class="count_top"><i class="fa fa-user"></i> Total Release </span>
+                                <div class="count"><?php echo number_format($total_release, 2); ?></div>
                                 <span class="count_bottom">Last Access Date 
                                     <i class="green">
                                         <?=h(date('Y-M-d H:i A'));?>
