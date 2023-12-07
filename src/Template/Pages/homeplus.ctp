@@ -98,7 +98,7 @@
                     <div class="tile_count">
                         <div class="col-md-6 col-sm-6  tile_stats_count">
                             <span class="count_top"><i class="fa fa-user"></i> Total Contributions</span>
-                            <div class="count"><?=h($total_contribution);?></div>
+                            <div class="count">₱<?=h(number_format($total_contribution, 2));?></div>
                             <span class="count_bottom">Last Access Date 
                                 <i class="green">
                                     <?=h(date('Y-M-d H:i A'));?>
@@ -107,7 +107,7 @@
                         </div>
                         <div class="col-md-6 col-sm-6  tile_stats_count">
                             <span class="count_top"><i class="fa fa-user"></i> Total Loans</span>
-                            <div class="count"><?=h($total_loan);?></div>
+                            <div class="count">₱<?=h(number_format($total_loan, 2));?></div>
                             <span class="count_bottom">Last Access Date 
                                 <i class="green">
                                     <?=h(date('Y-M-d H:i A'));?>
