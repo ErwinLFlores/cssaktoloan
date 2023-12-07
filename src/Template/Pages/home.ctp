@@ -55,11 +55,11 @@
                         <div class="col-md-6 col-sm-6  tile_stats_count">
                             <span class="count_top"><i class="fa fa-user"></i> Total Contributions</span>
                             <div class="count">
-                                <?php echo isset($total_contribution) ? $total_contribution : 0; ?>
+                                <?php echo number_format($user['total_contribution_amount'], 2); ?>
                             </div>
                             <span class="count_bottom">Last Access Date 
                                 <i class="green">
-                                    TODO
+                                    TO DO
                                 </i><br/>
                             </span>
                         </div>
@@ -70,7 +70,7 @@
                             </div>
                             <span class="count_bottom">Last Access Date 
                                 <i class="green">
-                                    TODO
+                                    TO DO
                                 </i><br/>
                             </span>
                         </div>
@@ -81,20 +81,20 @@
                 <div class="card">
                     <div class="tile_count">
                         <div class="col-md-6 col-sm-6  tile_stats_count">
-                            <span class="count_top"><i class="fa fa-user"></i> For Approval </span>
-                            <div class="count">TODO</div>
+                            <span class="count_top"><i class="fa fa-user"></i> Monthly Contribution Amount </span>
+                            <div class="count"><?php echo number_format($user['monthly_contribution_amount'], 2); ?></div>
                             <span class="count_bottom">Last Access Date 
                                 <i class="green">
-                                    TODO
+                                    TO DO
                                 </i><br/>
                             </span>
                         </div>
                         <div class="col-md-6 col-sm-6  tile_stats_count">
-                            <span class="count_top"><i class="fa fa-user"></i> Pending Release </span>
-                            <div class="count">TODO</div>
+                            <span class="count_top"><i class="fa fa-user"></i> Withdraw Amount </span>
+                            <div class="count">0.00</div>
                             <span class="count_bottom">Last Access Date 
                                 <i class="green">
-                                    TODO
+                                    TO DO
                                 </i><br/>
                             </span>
                         </div>
@@ -146,20 +146,21 @@
                     </div>
                     <div class="x_content" style="height:320px;overflow-y:auto;">
                         <div class="dashboard-widget-content">
-                            <ul class="list-unstyled timeline widget">
-                                <li>
-                                    <div class="block">
-                                        <div class="block_content">
-                                        <h2 class="title">Logged In</h2>
-                                        <div class="byline">
-                                            <span>DATETIME</span> 
-                                            by <a>Arianne Santos</a>
+                        <?php foreach ($login_logs as $key => $value) { ?>
+                                    <li>
+                                        <div class="block">
+                                            <div class="block_content">
+                                            <h2 class="title"><?=h($value->message);?></h2>
+                                            <div class="byline">
+                                                <span>DATETIME</span> 
+                                                <span><?=h($value->created->format('Y-M-d H:i A'));?></span>
+                                                by <a><?=h(ucwords($value->username));?></a>
+                                            </div>
+                                            <p class="excerpt"></p>
+                                            </div>
                                         </div>
-                                        <p class="excerpt"></p>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
+                                    </li>
+                                <?php } ?>
                         </div>
                     </div>
                 </div>

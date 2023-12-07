@@ -90,17 +90,18 @@ class PagesController extends AppController
         $this->set('page_title', 'Dashboard');
 
         $this->loadModel('Loans');
-        $this->loadModel('Contributions');
+        $this->loadModel('Users');
+        $this->loadModel('LoginLogs');
 
         $user_id = $this->Auth->user('id');
+        $username = $this->Auth->user('email');
+
         $loan = $this->Loans->find('all')->where(
             [
                 'user_id' => $user_id
             ]
         );
-
-        $total_contribution = 0;
-
+        
         // $total_loan = $loan->sumOf('loan_amount');
         $total_loan = count($loan->all());
 
@@ -109,10 +110,26 @@ class PagesController extends AppController
 
         $logged_name = $this->Auth->user('firstname');
 
+        $user = $this->Users->find('all')->where(
+            [
+                'id' => $user_id
+            ]
+        )->first();
+
+        $login_logs = $this->LoginLogs->find('all')->where(
+            [
+                'username' => $username
+            ]
+        )
+        ->order(['id' => 'DESC'])
+        ->limit(5)
+        ->all();
+
         $this->set(compact([
             'logged_name', 
             'total_loan', 
-            'total_contribution'
+            'user',
+            'login_logs'
         ]));
     }
 
