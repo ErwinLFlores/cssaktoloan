@@ -62,7 +62,8 @@
                                                         ['blue; color: white', 'For Release'],
                                                         ['lightsalmon', 'Rejected'],
                                                         ['lightgreen', 'Approved and Released'],
-                                                        ['grey; color: white', 'Done']
+                                                        ['grey; color: white', 'Done'],
+                                                        ['lightorange' => 'Cancel']
                                                     ];
                                                 ?>
                                                     <h6><span class='badge' style="background-color: <?=h($statuses[$result['status']][0]);?>;"> <?=h($statuses[$result['status']][1]);?></span></h6>

@@ -83,7 +83,8 @@ class AppController extends Controller
             ['lightblue' => 'For Release'],
             ['red' => 'Rejected'],
             ['green' => 'Approved and Released'],
-            ['grey' => 'Done']
+            ['grey' => 'Done'],
+            ['lightorange' => 'Cancel']
         ];
 
         return $statuses[$status];

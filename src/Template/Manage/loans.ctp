@@ -58,7 +58,8 @@
                                         ['blue; color: white', 'For Release'],
                                         ['lightsalmon', 'Rejected'],
                                         ['lightgreen', 'Approved and Released'],
-                                        ['grey; color: white', 'Done']
+                                        ['grey; color: white', 'Done'],
+                                        ['lightorange' => 'Cancel']
                                     ];
                                 ?>
                                 <?php if (count($loans) > 0): ?>

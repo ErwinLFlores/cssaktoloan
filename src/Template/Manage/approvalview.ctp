@@ -168,7 +168,7 @@
                         <hr style="background-color: grey; margin:0px;border: 1px solid grey;"/>
                         <div id="family-sectors" class="col-md-12 col-xs-12 no-padding" style="font-size:9px;text-align:center;">
                             <b><u>STATUS</u> &nbsp;</b>
-                            0 = For Verification | 1 = For Contract Signing | 2 = For User Contract Agreement | 3 = For Release | 4 = Rejected | 5 = Approved and Released | 6 = Done 
+                            0 = For Verification | 1 = For Contract Signing | 2 = For User Contract Agreement | 3 = For Release | 4 = Rejected | 5 = Approved and Released | 6 = Done | 7 = Cancel
                         </div>
                     </div>
                     <div class="col-md-1 col-xs-12"></div>
