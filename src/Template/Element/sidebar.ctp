@@ -50,7 +50,7 @@
                                 { ?>
                                     <li><a href="/loans/borrowAdd">Request </a></li>
                                 <?php } ?>
-                            <li><a href="/loans/borrow">Borrow</a></li>
+                            <li><a href="/loans/borrow">List</a></li>
                         </ul>
                     </li>
                 </ul>
