@@ -243,7 +243,6 @@ class ManageController extends AppController
                     $this->loadModel('Contracts');
                     $contract = $this->Contracts->find('all')
                         ->where([
-                            'loan_id' => 21,
                             'status' => 'active'
                         ])
                         ->first();
