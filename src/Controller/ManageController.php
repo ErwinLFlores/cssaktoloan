@@ -230,14 +230,14 @@ class ManageController extends AppController
             return $this->redirect(['controller' => 'manage', 'action' => 'contracts']);
         } else {
             try {
-                
+                $contract_data = $this->ChatGpt->create($this->borrowerdata($data));
+                $contract_sample = json_decode($contract_data);
 
                 if (
                     (isset($contract_sample->choices[0]->message->content))
                     && (!empty($contract_sample->choices[0]->message->content))
                 ) {
-                    $contract_data = $this->ChatGpt->create($this->borrowerdata($data));
-                    $contract_sample = json_decode($contract_data);
+        
                     $contract = $contract_sample->choices[0]->message->content;
                 } else {
                     $this->loadModel('Contracts');
