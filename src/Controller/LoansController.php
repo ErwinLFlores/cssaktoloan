@@ -209,14 +209,17 @@ class LoansController extends AppController
         $computations['total_loan_amount'] = $loan->loan_amount;
         $computations['annual_interest_rate'] = (!empty($loan->interest_per_month)) ? $loan->interest_per_month : 3.5;
         $computations['loan_terms'] = $loan->terms_of_payment;
+        $computations['total_interest_amount'] = $computations['total_loan_amount'] * ($computations['annual_interest_rate'] / 100);
 
         $computations['past_due_principal'] = 0.00;
         $computations['past_due_interest_rate'] = $computations['annual_interest_rate'];
         $computations['past_due_interest'] = 0.00;
         $computations['past_due_penalty'] = 0.00;
         $computations['past_due_total_amount'] = 0.00;
-
-        if ($loan_payments->isEmpty()) {
+        if (
+            ($loan_payments->isEmpty())
+            && (strtotime('now') > strtotime('+1 month', strtotime($loan->created->format('Y-m-d H:i:s'))))
+        ) {
             $computations['past_due_principal'] = $computations['total_loan_amount'] / $computations['loan_terms'];
             $computations['past_due_interest'] = $computations['past_due_principal'] * ($computations['past_due_interest_rate'] / 100);
             $computations['past_due_penalty'] = $computations['past_due_principal'] * $computations['penalty_interest']; 
@@ -250,7 +253,7 @@ class LoansController extends AppController
             $computations['not_yet_due_total'] = $computations['not_yet_due_principal'] + $computations['not_yet_due_interest'];
         }
 
-        $computations['total_obligation_amount'] = $computations['total_loan_amount'] - $computations['total_payments'] + $computations['past_due_penalty'];
+        $computations['total_obligation_amount'] = $computations['total_loan_amount'] - $computations['total_payments'] + $computations['past_due_penalty'] + $computations['total_interest_amount'];
         $computations['total_current_amount'] = $computations['total_current_due_amount'] + $computations['past_due_total_amount'];
         $this->set(compact(['loan', 'loan_payments', 'computations']));
     }
