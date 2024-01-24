@@ -12,7 +12,7 @@
                         ]); ?>
                             <div class="form-group">
                                 <label for="firstName">Terms</label>
-                                <input type="text" class="form-control" name="terms_of_payment" id="terms_of_payment" placeholder="Enter your Terms">
+                                <input type="text" class="form-control" name="terms_of_payment" id="terms_of_payment" placeholder="Enter your Terms (months)">
                             </div>
                             <div class="form-group">
                                 <label for="lastName">Loan Amount</label>

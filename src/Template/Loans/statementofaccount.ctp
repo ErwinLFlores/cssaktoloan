@@ -1,102 +1,140 @@
-<div class="container mt-5">
+<div class="container mt-1">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
+            <a href="/loans/borrow"  class="btn btn-warning" style="color:black;">Back to List</a>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loanModal">
+                Open Loan Info
+            </button>
+        </div>
+
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    Statement of Account as of <?php echo date('F, d Y'); ?>
+                    <h4>Statement of Account as of <?php echo date('F d, Y H:i A'); ?></h4>
+                </div>
+                <div class="card-body">
+                    <h5>Past Due</h5>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td width="40%"></td>
+                                <td width="45%">Principal</td>
+                                <td>₱ <?=h(number_format($computations['past_due_principal'], 2));?></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>Interest (<?=h($computations['past_due_interest_rate']);?>%)</td>
+                                <td>₱ <?=h(number_format($computations['past_due_interest'], 2));?></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>Penalty (<?=h($computations['penalty_interest'] * 100);?>%)</td>
+                                <td>₱ <?=h(number_format($computations['past_due_penalty'], 2));?></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h5>Current Due</h5>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td width="40%"></td>
+                                <td width="45%">Principal</td>
+                                <td>₱ <?=h(number_format($computations['current_due_principal'], 2));?></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>Interest (<?=h($computations['current_due_interest_rate']);?>%)</td>
+                                <td>₱ <?=h(number_format($computations['current_due_interest'], 2));?></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><b>Total Amount to be Paid</b></td>
+                                <td><b>₱ <?=h(number_format($computations['total_current_amount'], 2));?></b></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h5>-</h5>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td width="40%"></td>
+                                <td width="45%"><b>Amount Not Yet Due</b></td>
+                                <td>₱ <?=h(number_format($computations['not_yet_due_total'], 2));?></td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td>Principal</td>
+                                <td>₱ <?=h(number_format($computations['not_yet_due_principal'], 2));?></td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td>Interest (<?=h($computations['not_yet_due_interest_rate']);?>%)</td>
+                                <td>₱ <?=h(number_format($computations['not_yet_due_interest'], 2));?></td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td>Penalties (<?=h($computations['penalty_interest'] * 100);?>%)</td>
+                                <td>₱ <?=h(number_format($computations['past_due_penalty'], 2));?></td>
+                            </tr>
+
+
+                            <tr>
+                                <td></td>
+                                <td><b>Total Amount of Obligation (unpaid)</b></td>
+                                <td>
+                                    <b>₱ <?=h(number_format($computations['total_obligation_amount'], 2));?></b>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Created Payments</h4>
                 </div>
                 <div class="card-body">
 
-                    <h3>Past Due</h3>
-                    <table class="table">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="text-align:center;" scope="col" width="80%">Date</th>
+                                <th style="text-align:center;" scope="col">Amount</th>
+                            </tr>
+                        </thead>
                         <tbody>
-                            <tr>
+                            <?php if ($loan_payments->isEmpty()) { ?>
+                                <tr>
+                                    <td colspan="2"> <i> No Payment(s) has been made </i></td>
+                                </tr>
+                            <?php } else { ?>
+                                <?php foreach($loan_payments as $payments) { ?>
+                                    <tr>
+                                        <td>
+                                            <?php echo date("Y-M-d H:i A", strtotime($payments['created'])); ?>
+                                        </td>
+                                        <td style="text-align: right;">
+                                            <?php echo number_format($payments['loan_total_payment'], 2); ?>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
 
-                                <td width="55%"></td>
-                                <td>Principal</td>
-                                <td style="text-align: right;">0.00</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>Interest</td>
-                                <td style="text-align: right;">0.00</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <h3>Current Due</h3>
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <td width="55%"></td>
-                                <td>Principal</td>
-                                
-                                <td style="text-align: right;">
-                                    <?php 
-                                        $current_due = abs($loan['loan_amount']) / abs($loan['terms_of_payment']);
-                                        echo number_format($current_due, 2);
-                                    ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>Interest (3.5%)</td>
-                                <td style="text-align: right;">
-                                    <?php 
-                                        $current_interest_loan = abs($loan['loan_amount']) * 3.5;
-                                        $current_interest = $current_interest_loan / 100;
-                                        echo number_format($current_interest, 2);
-                                    ?>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <td width="55%"></td>
-                                <td><b>Total Amount</b></td>
-                                <td style="text-align: right;">
-                                <b>
-                                    <?php
-                                        $total_amount = $current_due + $current_interest;
-                                        echo number_format($total_amount, 2);
-                                    ?>
-                                </b>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td></td>
-                                <td><b>Amount Not Yet Due</b></td>
-                                <td style="text-align: right;">0.00</td>
-                            </tr>
-
-                            <tr>
-                                <td></td>
-                                <td style="padding-left: 100px;">Principal</td>
-                                <td style="text-align: right;">0.00</td>
-                            </tr>
-
-                            <tr>
-                                <td></td>
-                                <td style="padding-left: 100px;">Interest</td>
-                                <td style="text-align: right;">0.00</td>
-                            </tr>
-
-                            <tr>
-                                <td></td>
-                                <td><b>Total Amount of Obligation</b></td>
-                                <td style="text-align: right;">
-                                <b>
-                                    <?php
-                                        $total_amount_obligation = $total_amount * abs($loan['terms_of_payment']);
-                                        echo number_format($total_amount_obligation, 2);
-                                    ?>
-                                </b>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td style="text-align: right;"><b>Total Payment</b></td>
+                                    <td style="text-align: right;">
+                                        <b><?=h(number_format($computations['total_payments'], 2)); ?></b>
+                                    </td>
+                                </tr>
+                            <?php } ?>
                         </tbody>
                     </table>
 
@@ -106,48 +144,42 @@
     </div>
 </div>
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
-                    Created Payment
-                </div>
-                <div class="card-body">
-
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th scope="col" width="80%">Date</th>
-                                <th scope="col">Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php $total_payment = 0; ?>
-                            <?php foreach($loan_payments as $payments) { ?>
-                                <tr>
-                                    <td>
-                                        <?php echo date("Y-m-d", strtotime($payments['created'])); ?>
-                                    </td>
-                                    <td style="text-align: right;">
-                                        <?php echo number_format($payments['amount'], 2); ?>
-                                    </td>
-                                </tr>
-                                <?php $total_payment += $payments['amount']; ?>
-                            <?php } ?>
-                            
-
-                            <tr>
-                                <td style="text-align: right;"><b>Total Payment</b></td>
-                                <td style="text-align: right;">
-                                    <b><?php echo number_format($total_payment, 2); ?></b>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                </div>
+<div class="modal fade" id="loanModal" tabindex="-1" role="dialog" aria-labelledby="loanModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                    <h5 class="modal-title" id="loanModalLabel">Loan Information</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
             </div>
+            <div class="modal-body">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td>Total Loan Amount</td>
+                            <td>₱ <?=h(number_format($computations['total_loan_amount'], 2)); ?></td>
+                        </tr>
+                        <tr>
+                            <td>Loan Terms</td>
+                            <td><?=h($computations['loan_terms']); ?> months</td>
+                        </tr>
+                        <tr>
+                            <td>Annual Interest Rate</td>
+                            <td><?=h($computations['annual_interest_rate']); ?>%</td>
+                        </tr>
+                        <tr>
+                            <td>Penalty Interest Rate</td>
+                            <td><?=h($computations['penalty_interest'] * 100); ?>%</td>
+                        </tr>
+                        <tr>
+                            <td>Request Date</td>
+                            <td><?=h($loan->created->format('Y-M-d H:i A')); ?></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer"></div>
         </div>
     </div>
 </div>

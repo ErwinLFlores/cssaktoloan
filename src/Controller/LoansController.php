@@ -98,7 +98,10 @@ class LoansController extends AppController
                 'status' => 2
             ])
             ->first();
-        $data = $this->Loans->patchEntity($data, ['status' => 3]);
+        $data = $this->Loans->patchEntity($data, [
+            'status' => 3,
+            'user_contract_approval_date' => date('Y-m-d h:i:s')
+        ]);
         
         if ($data = $this->Loans->save($data)) {
             $message = 'You have agreed Loan #' . $data->id . ' contract terms and conditions. Wait for ' 
@@ -140,6 +143,8 @@ class LoansController extends AppController
             $this->request->data['user_id']= $this->Auth->user('id');
             $loan = $this->Loans->newEntity();
             $loan = $this->Loans->patchEntity($loan, $this->request->getData());
+            $loan->interest_per_month = 3.5;
+
             if ($this->Loans->save($loan)) {
                 $this->Flash->success(__('The borrow request has been saved.'));
                 return $this->redirect(['action' => 'borrow']);
@@ -186,15 +191,67 @@ class LoansController extends AppController
     public function statementofaccount($id)
     {   
         $this->loadModel('LoansPayments');
+        $computations = [];
+        $computations['current_month'] = date('m');
+        $computations['current_year'] = date('Y');
+        $computations['monthly_payment_day'] = 20; //every 20th of the month
+        $computations['penalty_interest'] = .10; //10%
+        $computations['total_payments'] = 0.00;
 
         $loan = $this->Loans->get($id);
-
         $loan_payments = $this->LoansPayments->find('all')->where(
-            [
-                'loans_id' => $id,
-            ]
-        )->all();
+            ['loans_id' => $id])->all();
 
-        $this->set(compact(['loan', 'loan_payments']));
+        foreach ($loan_payments as $key => $payment) {
+            $computations['total_payments'] = $computations['total_payments'] + $payment->loan_total_payment;
+        }
+
+        $computations['total_loan_amount'] = $loan->loan_amount;
+        $computations['annual_interest_rate'] = (!empty($loan->interest_per_month)) ? $loan->interest_per_month : 3.5;
+        $computations['loan_terms'] = $loan->terms_of_payment;
+
+        $computations['past_due_principal'] = 0.00;
+        $computations['past_due_interest_rate'] = $computations['annual_interest_rate'];
+        $computations['past_due_interest'] = 0.00;
+        $computations['past_due_penalty'] = 0.00;
+        $computations['past_due_total_amount'] = 0.00;
+
+        if ($loan_payments->isEmpty()) {
+            $computations['past_due_principal'] = $computations['total_loan_amount'] / $computations['loan_terms'];
+            $computations['past_due_interest'] = $computations['past_due_principal'] * ($computations['past_due_interest_rate'] / 100);
+            $computations['past_due_penalty'] = $computations['past_due_principal'] * $computations['penalty_interest']; 
+            $computations['past_due_total_amount'] = $computations['past_due_principal'] + $computations['past_due_interest'] + $computations['past_due_penalty'];
+        }
+
+        if (date('d') > $computations['monthly_payment_day']) {
+            $computations['past_due_total_amount'] += $computations['past_due_penalty'];
+        }
+
+        $computations['current_due_principal'] = 0;
+        $computations['current_due_interest_rate'] = 0;
+        $computations['current_due_interest'] = 0;
+        $computations['total_current_due_amount'] = 0;
+
+        if ($computations['loan_terms'] > 1 || intval($computations['past_due_total_amount']) == 0) {
+            $computations['current_due_principal'] = $computations['total_loan_amount'] / $computations['loan_terms'];
+            $computations['current_due_interest_rate'] = $computations['annual_interest_rate'];
+            $computations['current_due_interest'] = $computations['current_due_principal'] * ($computations['current_due_interest_rate'] / 100);
+            $computations['total_current_due_amount'] = $computations['current_due_principal'] + $computations['current_due_interest'];
+        } 
+        
+        $computations['not_yet_due_principal'] = 0.00;
+        $computations['not_yet_due_interest_rate'] = $computations['annual_interest_rate'];
+        $computations['not_yet_due_interest'] = 0.00;
+        $computations['not_yet_due_total'] = 0.00;
+
+        if ($computations['loan_terms'] >= 3) {
+            $computations['not_yet_due_principal'] = $computations['total_loan_amount'] - ($computations['current_due_principal'] + $computations['past_due_principal']) - $computations['total_payments'];
+            $computations['not_yet_due_interest'] = $computations['not_yet_due_principal'] * ($computations['not_yet_due_interest_rate'] / 100);
+            $computations['not_yet_due_total'] = $computations['not_yet_due_principal'] + $computations['not_yet_due_interest'];
+        }
+
+        $computations['total_obligation_amount'] = $computations['total_loan_amount'] - $computations['total_payments'] + $computations['past_due_penalty'];
+        $computations['total_current_amount'] = $computations['total_current_due_amount'] + $computations['past_due_total_amount'];
+        $this->set(compact(['loan', 'loan_payments', 'computations']));
     }
 }

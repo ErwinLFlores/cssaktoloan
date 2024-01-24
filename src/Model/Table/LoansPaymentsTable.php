@@ -9,14 +9,17 @@ use Cake\Validation\Validator;
 /**
  * LoansPayments Model
  *
- * @method \App\Model\Entity\Loan get($primaryKey, $options = [])
- * @method \App\Model\Entity\KeeLoanper newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Loan[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Loan|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Loan saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Loan patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Loan[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Loan findOrCreate($search, callable $callback = null, $options = [])
+ * @property &\Cake\ORM\Association\BelongsTo $Loans
+ * @property &\Cake\ORM\Association\BelongsTo $Users
+ *
+ * @method \App\Model\Entity\LoansPayment get($primaryKey, $options = [])
+ * @method \App\Model\Entity\LoansPayment newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\LoansPayment[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\LoansPayment|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\LoansPayment saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\LoansPayment patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\LoansPayment[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\LoansPayment findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
@@ -37,6 +40,13 @@ class LoansPaymentsTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+
+        $this->belongsTo('Loans', [
+            'foreignKey' => 'loans_id',
+        ]);
+        $this->belongsTo('Users', [
+            'foreignKey' => 'user_id',
+        ]);
     }
 
     /**
@@ -52,19 +62,24 @@ class LoansPaymentsTable extends Table
             ->allowEmptyString('id', null, 'create');
 
         $validator
-            ->integer('loans_id');
+            ->scalar('loan_principal_amount')
+            ->maxLength('loan_principal_amount', 45)
+            ->allowEmptyString('loan_principal_amount');
 
         $validator
-            ->integer('user_id');
-        
+            ->scalar('loan_interest_amount')
+            ->maxLength('loan_interest_amount', 45)
+            ->allowEmptyString('loan_interest_amount');
+
         $validator
-            ->scalar('amount');
-        
+            ->scalar('loan_penalty_amount')
+            ->maxLength('loan_penalty_amount', 45)
+            ->allowEmptyString('loan_penalty_amount');
+
         $validator
-            ->integer('approval_user_id');
-        
-        $validator
-            ->integer('auto_debit');
+            ->scalar('loan_total_payment')
+            ->maxLength('loan_total_payment', 45)
+            ->allowEmptyString('loan_total_payment');
 
         return $validator;
     }
@@ -76,5 +91,11 @@ class LoansPaymentsTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-   
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->existsIn(['loans_id'], 'Loans'));
+        $rules->add($rules->existsIn(['user_id'], 'Users'));
+
+        return $rules;
+    }
 }

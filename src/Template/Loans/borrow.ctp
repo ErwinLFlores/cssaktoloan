@@ -47,7 +47,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-
                                 <?php if (count($data) > 0) : ?>
                                     <?php foreach ($data as $result) : ?>
                                         <tr>
@@ -73,11 +72,16 @@
                                             <td>
                                                 <?php if ($result['status'] == 0) { ?>
                                                     <a href="/loans/borrowUpdate/<?php echo $result['id']; ?>" class="btn btn-xs btn-success" >Update</a>
-                                                    <a href="/loans/borrowDelete/<?php echo $result['id']; ?>" class="btn btn-xs btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
+                                                    <a href="/loans/cancelloan/<?php echo $result['id']; ?>/cancel" class="btn btn-xs btn-warning" style="color:black;" onclick="return confirm('Are you sure?')">Cancel</a>
                                                 <?php } else { ?>
-                                                    <a href="/loans/statementofaccount/<?php echo $result['id']; ?>" class="btn btn-xs  btn-primary" >View SOA</a>
-                                                    <?php if ($result['status'] == 2) { ?>
-                                                        <a href="/loans/viewcontract/<?php echo $result['id']; ?>/agreement" style="color: black;" class="btn btn-xs btn-warning" >View Contract</a>
+                                                    <?php if (
+                                                        ($result['status'] != 4) 
+                                                        && ($result['status'] != 7) 
+                                                    ) { ?>
+                                                        <a href="/loans/statementofaccount/<?php echo $result['id']; ?>" class="btn btn-xs  btn-primary" >View SOA</a>
+                                                        <?php if ($result['status'] == 2) { ?>
+                                                            <a href="/loans/viewcontract/<?php echo $result['id']; ?>/agreement" style="color: black;" class="btn btn-xs btn-warning" >View Contract</a>
+                                                        <?php } ?>
                                                     <?php } ?>
                                                 <?php } ?>
                                             </td>

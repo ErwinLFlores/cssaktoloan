@@ -34,7 +34,7 @@
                 <h3>General</h3>
                 <ul class="nav side-menu">
                     <li class="<?php echo ($this->request->params['controller'] == 'Pages') ? 'active' : ''; ?>">
-                        <a href="/">
+                        <a href="/pages/homeplus">
                             <i class="fa fa-tachometer"></i> Dashboard
                         </a>
                     </li>
